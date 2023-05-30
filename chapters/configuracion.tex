@@ -1,0 +1,93 @@
+\chapter{Configuración de la memoria}
+
+\section{Ficheros y directorios}
+
+La estructura de ficheros es la siguiente:
+
+\begin{description}
+    \item[\texttt{./appendices/}] Los fuentes de los capítulos de apéndices.
+    \item[\texttt{./chapters/}] Los fuentes de los capítulos que forman parte del cuerpo de la memoria.
+    \item[\texttt{./figures/}] Las figuras (imágenes, diagramas) que se usarán en la memoria.
+    \item[\texttt{./fonts/}] Las fuentes que se usan en la memoria. Lo mismo que antes, si se piensa en ampliar la plantilla, es otro de los sitios donde tocar.
+    \item[\texttt{./prefrontmatter/}] Los fuentes de todo aquello que se incluye antes del cuerpo de la memoria, como por ejemplo los glosarios.
+    \item[\texttt{./logos}] Los logos que se usan en la configuración de la memoria. Es de esperar que no se toquen, aunque si se está trabajando en ampliar la plantilla, este es uno de los sitios donde tocar.
+    \item[\texttt{./sources}] Ficheros con fuentes que se incluyen dentro de listados en el documento.
+    \item[\texttt{./firma.png}] El fichero con la imagen de la firma del estudiante que ha desarrollado la memoria. Se usa en la hoja de declaración de autoría.
+    \item[\texttt{./references.bib}] Los fuentes en bibtex de la bibliografía referenciada en la memoria.
+    \item[\texttt{./report.tex}] El fichero con el código fuente principal, el cual será necesario tocar para incluir el resto de fuentes.
+    \item[\texttt{./upm-report.cls}] El fichero con la descripción de la memoria, con todas las opciones de configuración y demás.
+\end{description}
+
+\section{¿Cómo empiezo a escribir la memoria?}
+
+Con cuidado. Esto quiere decir que habría que empezar por el principio, es decir, con el fichero \texttt{report.tex}. La primera línea del fichero tiene la siguiente forma:
+
+\lstinputlisting[language=tex,firstline=1,lastline=7,caption=Primeras líneas del fichero \texttt{report.tex}]{report.tex}
+
+En este punto es donde se configura gran parte de la plantilla. Los parámetros y sus opciones son las siguientes:
+
+\begin{description}
+    \item[\texttt{school}] La escuela a la que pertenece el estudiante. La idea de la plantilla es que se use a lo largo de todas las escuelas de la UPM, y que cada una de ellas tenga su propia configuración. La escuela determinará, entre otras cosas, direcciones y colores principales. Las opciones se describen en el apéndice~\ref{ch:escuelas-y-titulos}.
+    \item[\texttt{type}] El tipo de memoria. Modifica algunos textos, incluida la portada. Puede tomar los valores \texttt{pfg} (\acrlong{pfg}), \texttt{pfm}  (\acrlong{pfm}) o \texttt{phd} (\acrlong{td})
+    \item[\texttt{degree}] El grado al que aspira el estudiante. De momento sólo están definidos los grados que se imparten en la ETSISI.
+    \item[\texttt{authorsex}] Puede ser \texttt{m} (masculino) o \texttt{f} (femenino), y sirve para modificar algunos textos relacionados con el sexo del estudiante. Si no se especifica, se usará el genérico masculino.
+    \item[\texttt{directorsex}] Similar al parámetro \texttt{authorsex}, pero para el director/tutor del proyecto.
+\end{description}
+
+Tras esta configuración, se incluye el fichero de referencias bibliográficas:
+
+\lstinputlisting[language=tex,firstline=9,lastline=9,caption=Inclusión del fichero de referencias bibliográficas \texttt{references.bib}]{report.tex}
+
+El tema de las referencias bibliográficas se explica en el capítulo~\ref{ch:referencias}, sección~\ref{s:bibliografía}. En principio no habría que tocar nada, pero si las referencias se tienen en otro fichero, bastaría con cambiar el nombre al de dicho fichero.
+
+Los tres siguientes comandos indican el nombre del autor del proyecto, su título y el tutor/director. La verdad es que no tiene mucho más misterio.
+
+\lstinputlisting[language=tex,firstline=11,lastline=13,caption={Configurando autor, título del proyecto y director}]{report.tex}
+
+Tras ello, empieza el cuerpo del proyecto propiamente dicho. Los primeros tres comandos \texttt{include} incluyen el contenido de tres ficheros, el referente al \textit{glosario}, al \textit{abstract} y a los \textit{agradecimientos}, ficheros que se encuentran bajo el directorio \texttt{prefrontmatter}
+
+\lstinputlisting[language=tex,firstline=17,lastline=19,caption={Insertando los ficheros de agradecimientos, abstract y glosario}]{report.tex}
+
+Sobre el glosario se habla con algo más de detalle en el capítulo~\ref{ch:referencias}, sección~\ref{s:glosario}. El fichero de \texttt{abstract.tex} incluye, en realidad, dos capítulos, uno para el resumen en español y otro para el resumen en inglés (y sí, hay que hacer los dos). Por último, el fichero \texttt{agradecimientos.tex} sirve para añadir los agradecimientos, que esto siempre gusta a las abuelas.
+
+Tras ello, pasamos a la parte frontal de la memoria: los índices, glosario y acrónimos. Se autogeneran a partir del contenido de la memoria, pero hay que declararlos. Son los siguientes:
+
+\lstinputlisting[language=tex,firstline=23,lastline=27,caption=Generando índices y listados]{report.tex}
+
+Realmente indispensable no hay ninguno, pero por lo menos estaría bien mantener la tabla de contenidos (comando \texttt{tableofcontents}). Los demás se refieren a la lista de figuras, de cuadros\footnote{Lo llamamos cuadros y no tablas porque un cuadro es un concepto más genérico que una tabla, y tabla es un \textit{false friente} del inglés \textit{table}.}, de listados de fuentes y glosario más acrónimos respectivamente.
+
+Tras la parte frontal se pasa al cuerpo donde, normalmente, tendremos un fichero por capítulo, así tenemos la memoria bien organizada. Estos capítulos se incluyen con el comando \texttt{include} y esta plantilla tiene unos cuantos para que se vea su uso.
+
+El último elemento que se incluye es la bibliografía (comando \texttt{printbibliography}) tras la cual vienen los apéndices. Éstos se incluirán igual que el resto de ficheros, con el comando \texttt{include}, pero al ir declarados después del comando \texttt{appendix} su numeración será diferente.
+
+Y ya está terminada la memoria. Resumiendo, hay que configurar la plantilla, poner el autor, título y director del proyecto e incluir los capítulos y apéndices que queramos.
+
+\section{¿Cómo estructurar la memoria?}
+
+La respuesta rápida es ``como buenamente quieras/puedas''. En realidad la estructura de la memoria va a depender del tipo de trabajo desarrollado.
+
+Aún así es cierto que, con carácter general, los trabajos suelen seguir ciertas estructuras. En esta sección comentamos algunas de éstas en función del tipo de memoria que se esté desarrollando.
+
+Un \gls{pfg} es un trabajo cuyo propósito es demostrar que se han llegado a adquirir las competencias asociadas con la titulación cursada. Con esto queremos decir que, a diferencia de otros tipos de trabajo académico, en éste no es necesario realizar aportaciones originales al estado de la cuestión.
+
+Una estructura típica es al siguiente:
+
+\begin{enumerate}
+    \item Contenido inicial
+    \item Estado de la cuestión
+    \item Metodología
+    \item Resultados y Discusión
+    \item Conclusiones
+    \item Referencias bibliográficas
+    \item Glosario
+    \item Apéndices
+    \item Índice
+\end{enumerate}
+
+Un \gls{pfm}, a diferencia de un \gls{pfg} trata de profundizar más en un campo concreto de una disciplina, por lo que tiene a ser más extenso y mucho más específico.
+
+En términos generales, la estructura es similar. Sin embargo es de esperar que el nivel de exigencia sea mayor, ya que el estudiante que lo realiza debe demostrar que es un titulado superior. Esto se nota más en la fase de documentación, ya que al tratar de profundizar en un tema más específico, el trabajo de contextualizar y argumentar es más tedioso.
+
+Se pueden identificar dos tipos de proyectos diferentes, aquellos que podríamos catalogar de \textit{profesionales}, con enfoque a la innovación o mejora en un área profesional concreta, y aquellos \textit{de investigación}, más enfocados a la búsqueda de nuevo conocimiento en el área, y que suelen ser el comienzo de la carrera investigadora.
+
+Por último, una \gls{td} es un trabajo eminentemente de investigación. Su profundidad y complejidad es la más alta, su extensión es mucho mayor, con claro énfasis en el análisis del estado de la cuestión y la discusión de resultados. Por lo demás, su estructura es similar a la presentada anteriormente.
