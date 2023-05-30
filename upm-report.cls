@@ -213,6 +213,11 @@
 \RequirePackage[tablegrid,owncaptions]{vhistory}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% La gente odia la palabra cuadro
+%
+\renewcommand{\tablename}{Tabla}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Para las figuras
 %
 \RequirePackage{float}
@@ -236,13 +241,21 @@
 % Idioma
 %
 \RequirePackage{polyglossia}
-\setdefaultlanguage{spanish}
+\setmainlanguage{spanish}
+\gappto\captionsspanish{%
+    \renewcommand{\tablename}{Tabla}%
+    \renewcommand{\listtablename}{Índice de tablas}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gestión de las comillas
+%
 \RequirePackage{csquotes}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Licencia de la memoria
 %
-\RequirePackage[type={CC}, modifier={by-sa}, version={4.0}]{doclicense}
+\RequirePackage[type={CC}, modifier={by-nc-sa}, version={4.0}]{doclicense}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Referencias y bibliografía
@@ -367,7 +380,6 @@
     
 }
 \chapterstyle{upmstyle}
-
 
 % TODO Intentar buscar unos estilos con un poco más de gusto
 \setsecheadstyle              {\huge\sffamily\raggedright}
@@ -526,8 +538,12 @@
 	}
 	
 	\par{
-		\doclicenseThis
-	}
+    \doclicenseThis
+ }
+
+ \par{
+ \footnotesize Obra derivada de \href{https://github.com/blazaid/UPM-Report-Template}{https://github.com/blazaid/UPM-Report-Template}. Todo cambio y modificación respecto a la obra original son responsabilidad exclusiva del presente autor.
+ }
     
  \clearpage
  
