@@ -123,8 +123,8 @@
 }{}
 
 %%%% ETSISI
-\ifthenelse{\equal{\@upm@degree}{61CDIA}}{
-    \renewcommand{\degreecode}{61CDIA}
+\ifthenelse{\equal{\@upm@degree}{61CD}}{
+    \renewcommand{\degreecode}{61CD}
     \renewcommand{\degreename}{%
         Grado en Ciencia de Datos e Inteligencia Artificial
     }
