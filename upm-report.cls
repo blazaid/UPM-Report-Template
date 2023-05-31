@@ -528,7 +528,7 @@
 	\theauthor
 	\par{
 		\textit{\@title}\\
-		\reporttype, \today\\
+		\reporttype, \textspanish{\today}\\
 		\textbf{\ifthenelse{\equal{\directorsex}{m}}{Director}{Directora}}: \@director
 	}
 	
