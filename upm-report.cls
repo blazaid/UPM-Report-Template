@@ -1,47 +1,46 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{upm-report}
+\ProvidesClass{upm-report}  %[2023-05-31 v1.0 UPM Report Template]
 
-\LoadClass[12pt, a4paper, oneside, extrafontsizes]{memoir}
+\LoadClass[12pt,a4paper,oneside]{book}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Nos aseguramos de que usamos xetex como motor de compilación
+%
 \RequirePackage{ifxetex}
 \RequireXeTeX
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Requisitos base
+% Paquetes globales
 %
-\RequirePackage{ifthen}
+\RequirePackage{awesomebox} % Bloques de texto más molones
+\RequirePackage{changepage} % Para poder usar los adjustwidth
+\RequirePackage{csquotes}   % Facilitar el trabajo con citas
+\RequirePackage{eso-pic}    % Colores y fondos
+\RequirePackage{graphicx}   % Mejoras sobre el paquete graphics
+\RequirePackage{ifthen}     % Para poder usar condicionales en la clase
+\RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
+\RequirePackage{xcolor}     % Mejoras sobre el paquete color
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Para los colores y fondos
-%
-\RequirePackage{graphicx}
-\RequirePackage{xcolor}
-\RequirePackage{eso-pic}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Constantes
+% Valores constantes
 %
 \def\universityname{Universidad Politécnica de Madrid}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Opciones de la clase
 %
-\RequirePackage{kvoptions}
+\RequirePackage{kvoptions} % Para usar argumentos al importar la clase
 \SetupKeyvalOptions{family=@upm, prefix=@upm@}
 
+% Opciones de configuración de la clase
 \DeclareStringOption{school}
 \DeclareStringOption{type}
 \DeclareStringOption{degree}
 \DeclareStringOption{authorsex}
 \DeclareStringOption{directorsex}
-
 \ProcessKeyvalOptions*
 
-% Comprobamos que los valores de las opciones son válidos y creamos las
-% variables en consecuencia
-
-%%% Información específica de la escuela
+% Variables relacionadas con la escuela (arg. 'school')
 \newcommand{\schoolname}{}
 \newcommand{\schoolabbr}{}
 \newcommand{\schoollogo}{}
@@ -55,7 +54,7 @@
         28006, Madrid, España
     }
     \definecolor{schoolcolor}{RGB}{0,177,230}
-    \definecolor{linkcolor}{RGB}{0,170,230}
+    \definecolor{linkcolor}{RGB}{0,177,230}
 }{}
 \ifthenelse{\equal{\@upm@school}{etsisi}}{%
     \renewcommand{\schoolname}{E.T.S. de Ingeniería de Sistemas Informáticos}
@@ -68,21 +67,28 @@
     \definecolor{schoolcolor}{RGB}{31,130,192}
     \definecolor{linkcolor}{RGB}{31,130,192}
 }{}
-
 \ifthenelse{\equal{\schoolname}{}}{
     \PackageError{upm-report}{School}{Falta el parámetro 'school'}
 }{}
 
-%%% Tipo de memoria
+% Variables relacionadas con el tipo de memoria (arg. 'type')
 \newcommand{\reporttype}{}
 \newcommand{\reporttypeabbr}{}
 \ifthenelse{\equal{\@upm@type}{pfg}}{
     \renewcommand{\reporttype}{Proyecto Fin de Grado}
     \renewcommand{\reporttypeabbr}{PFG}
 }{}
+\ifthenelse{\equal{\@upm@type}{tfg}}{
+    \renewcommand{\reporttype}{Trabajo Fin de Grado}
+    \renewcommand{\reporttypeabbr}{TFG}
+}{}
 \ifthenelse{\equal{\@upm@type}{pfm}}{
     \renewcommand{\reporttype}{Proyecto Fin de Máster}
     \renewcommand{\reporttypeabbr}{PFM}
+}{}
+\ifthenelse{\equal{\@upm@type}{tfm}}{
+    \renewcommand{\reporttype}{Trabajo Fin de Máster}
+    \renewcommand{\reporttypeabbr}{TFM}
 }{}
 \ifthenelse{\equal{\@upm@type}{td}}{
     \renewcommand{\reporttype}{Tesis Doctoral}
@@ -92,37 +98,10 @@
     \PackageError{upm-report}{Report type}{Falta el parámetro 'type'}
 }{}
 
-%%% Título de grado, máster o doctorado
+% Variables relacionadas con el título de estudios (arg. 'degree')
 \newcommand{\degreecode}{}
 \newcommand{\degreename}{}
-
-%%%% ETSII
-\ifthenelse{\equal{\@upm@degree}{05TI}}{
-    \renewcommand{\degreecode}{05TI}
-    \renewcommand{\degreename}{%
-        Grado en Ingeniería en Tecnologías Industriales
-    }
-}{}
-\ifthenelse{\equal{\@upm@degree}{05IQ}}{
-    \renewcommand{\degreecode}{05IQ}
-    \renewcommand{\degreename}{%
-        Grado en Ingeniería Química
-    }
-}{}
-\ifthenelse{\equal{\@upm@degree}{05IR}}{
-    \renewcommand{\degreecode}{05IR}
-    \renewcommand{\degreename}{%
-        Grado en Ingeniería de Organización
-    }
-}{}
-\ifthenelse{\equal{\@upm@degree}{05IE}}{
-    \renewcommand{\degreecode}{05IE}
-    \renewcommand{\degreename}{%
-        Grado en Ingeniería de la Energía
-    }
-}{}
-
-%%%% ETSISI
+%% ETSISI
 \ifthenelse{\equal{\@upm@degree}{61CD}}{
     \renewcommand{\degreecode}{61CD}
     \renewcommand{\degreename}{%
@@ -151,152 +130,150 @@
     \PackageError{upm-report}{Degree}{Falta el parámetro 'degree'}
 }{}
 
-%%% Sexo del autor
+% Variables relacionadas con el sexo del autor (arg. 'degree')
 \newcommand{\authorsex}{\@upm@authorsex}
 \ifthenelse{\not \( \equal{\authorsex}{m} \or \equal{\authorsex}{f} \)}{
     \PackageError{upm-report}{Author sex}{Falta el parámetro 'authorsex'}
 }{}
 
-%%% Sexo del director
+% Variables relacionadas con el sexo del director (arg. 'degree')
 \newcommand{\directorsex}{\@upm@directorsex}
 \ifthenelse{\not \( \equal{\directorsex}{m} \or \equal{\directorsex}{f} \)}{
     \PackageError{upm-report}{Director sex}{Falta el parámetro 'directorsex'}
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Algunos comandos
+% Variables
 %
-
-% Director del trabajo o tesis. Es un clone de "author", por lo que debería
-% funcionar también con varios mediante el comando \and
 \makeatletter
 \newcommand{\director}[1]{\gdef\@director{#1}}%
-\newcommand{\@director}{\@latex@warning@no@line{No \noexpand\director given}}
-\addtoiargdef{\director}{%
-  \begingroup\let\footnote\@gobble}{%
-  \begingroup
-    \renewcommand{\thanks}[1]{}
-    \renewcommand{\and}{\unskip, }
-    \renewcommand{\andnext}{\unskip, }
-    \renewcommand{\thanksmark}[1]{}
-    \renewcommand{\thanksgap}[1]{}
-    \protected@xdef\thedirector{#1}
-  \endgroup\endgroup}
-\newcommand{\predirector}[1]{\def\@bspredirector{#1}}
-\newcommand{\postdirector}[1]{\def\@bspostdirector{#1}}
-\renewcommand{\maketitlehookc}{%
-  {\@bspredirector \@director \@bspostdirector}%
-}
-\predirector{\begin{center}
-  \large \lineskip .5em%
-  \begin{tabular}[t]{c}}
-\postdirector{\end{tabular}\par\end{center}}
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Configuraciones varias
-%
-\pageaiv
-\setlength{\trimtop}{0pt}
-\setlength{\trimedge}{\stockwidth}
-\addtolength{\trimedge}{-\paperwidth}
-\settypeblocksize{634pt}{448.13pt}{*}
-\setulmargins{4cm}{*}{*}
-\setlrmargins{*}{*}{1}
-\setmarginnotes{17pt}{51pt}{\onelineskip}
-\setheadfoot{\onelineskip}{2\onelineskip}
-\setheaderspaces{*}{2\onelineskip}{*}
-\checkandfixthelayout
-\sideparmargin{outer}
-
-\RequirePackage{mathtools}
-\RequirePackage[tablegrid,owncaptions]{vhistory}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% La gente odia la palabra cuadro
-%
-\renewcommand{\tablename}{Tabla}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Para las figuras
-%
-\RequirePackage{float}
-\RequirePackage{caption}
-\RequirePackage{subcaption}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Para los colores y fondos
-%
-\RequirePackage{graphicx}
-\RequirePackage{xcolor}
-\RequirePackage{eso-pic}
-
-% Configuración específica de los colores definidos para la escuela
-\ifthenelse{\equal{\schoolabbr}{ETSISI}}{%
-    \definecolor{schoolcolor}{RGB}{0,170,228}
-    \definecolor{linkcolor}{RGB}{0,170,228}
-}{}
+\newcommand{\@director}{\@latex@warning@no@line{No \noexpand\director given}}\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Idioma
 %
-\RequirePackage{polyglossia}
-\setmainlanguage{spanish}
-\gappto\captionsspanish{%
-    \renewcommand{\tablename}{Tabla}%
-    \renewcommand{\listtablename}{Índice de tablas}
-}
+% TODO Convertir el lenguaje en una opción del paquete
+\RequirePackage[spanish,es-tabla]{babel}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Gestión de las comillas
+% Geometría general de las páginas
 %
-\RequirePackage{csquotes}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Licencia de la memoria
-%
-\RequirePackage[type={CC}, modifier={by-nc-sa}, version={4.0}]{doclicense}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Referencias y bibliografía
-%
-\RequirePackage[backend=biber,style=ieee]{biblatex}
-\addbibresource{references.bib}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Para bloques de texto más molones
-%
-\RequirePackage{awesomebox}
+\RequirePackage[
+    top=3.5cm,
+    bottom=3.5cm,
+    left=2.5cm,
+    right=2.5cm,
+]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cabeceras y pies de página
 %
-\def\hffont{\color{schoolcolor}\sffamily\small}
-\makepagestyle{schoolheader}
-\makeheadrule{schoolheader}{\textwidth}{\normalrulethickness}
-\makeevenhead{schoolheader}{\hffont\thepage}{}{\hffont\leftmark}
-\makeoddhead{schoolheader}{\hffont\rightmark}{}{\hffont\thepage}
-\makeevenfoot{schoolheader}{}{}{}
-\makeoddfoot{schoolheader}{}{}{}
-\makepsmarks{schoolheader}{
-    \nouppercaseheads
-    \createmark{chapter}{both}{shownumber}{}{\space}
-    \createmark{section}{right}{shownumber}{}{\space}
-    \createplainmark{toc}{both}{\contentsname}
-    \createplainmark{lof}{both}{\listfigurename}
-    \createplainmark{lot}{both}{\listtablename}
-    \createplainmark{bib}{both}{\bibname}
-    \createplainmark{index}{both}{\indexname}
-    \createplainmark{glossary}{both}{\glossaryname}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+
+% Estilos globales
+\fancyhf{}
+\fancyhead[L]{\textcolor{schoolcolor}{\sffamily\nouppercase{\rightmark}}}
+\fancyhead[R]{\textcolor{schoolcolor}{\sffamily\thepage}}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% Estilos en páginas "plain" (e.g. primera de capítulo)
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrule}{}
+    \renewcommand{\footrule}{}
 }
-\pagestyle{schoolheader}
-\copypagestyle{cleared}{schoolheader}
-\makeevenhead{cleared}{\hffont\thepage}{}{}
-\makeevenfoot{plain}{}{}{}
-\makeoddfoot{plain}{}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Hypersetup
+% Estilos de capítulo, sección, ...
+%
+\RequirePackage{titlesec}
+
+\titleformat{\chapter}%
+    {\fontsize{38}{38}}%
+    {\sffamily\fontsize{38}{38}\color{schoolcolor}\thechapter.}%
+    {0.6em}%
+    {\sffamily\fontsize{38}{38}\raggedleft\hspace*{\fill}}
+    [\hrule]
+\titlespacing*{\chapter}{0pt}{0pt}{25pt}
+
+\titleformat{\section}%
+    {}{\sffamily\huge\thesection.}{0.6em}{\sffamily\huge}
+\titleformat{\subsection}%
+    {}{\sffamily\Large\thesubsection.}{0.6em}{\sffamily\Large}
+\titleformat{\subsubsection}%
+    {}{\sffamily\large\thesubsubsection.}{0.6em}{\sffamily\large}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Estilos de la tabla de contenidos
+%
+\RequirePackage{titletoc}
+\setcounter{tocdepth}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fuentes
+%
+\RequirePackage{fontspec}  % Para importar fuentes externas
+\RequirePackage{microtype} % Mejoras tipográficas generales
+
+\setmainfont{Crimson-Roman}[
+    Ligatures=TeX,
+    ItalicFont={Crimson-Italic},
+    BoldFont={Crimson-Semibold},
+    BoldItalicFont={Crimson-SemiboldItalic}
+]
+
+\setsansfont[
+    Path=upm-report/fonts/Helvetica Neue LT/,
+    UprightFont=* 57 Condensed,
+    BoldFont=* 77 Bold Condensed,
+    ItalicFont=* 57 Condensed Oblique,
+    BoldItalicFont=* 77 Bold Condensed Oblique,
+]{Helvetica Neue LT}
+
+\setmonofont[
+    Path=upm-report/fonts/Fira Code/,
+    Extension=.ttf,
+    UprightFont=*-regular,
+    BoldFont=*-bold,
+    Scale=0.85
+]{firacode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fórmulas matemáticas
+%
+\RequirePackage{amsmath}   % Mejoras presentación matemática
+\RequirePackage{mathtools} % Más mejoras de presentación matemática
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuración de figuras y tablas
+%
+\RequirePackage{float}      % Mejorar colocación de elementos flotantes
+\RequirePackage{booktabs}   % Configuraciones para tablas más bonitas
+\RequirePackage{caption}    % Mejora de pies de figuras
+\RequirePackage{subcaption} % Pies de subfiguras
+
+
+\DeclareCaptionFormat{caption-upm}{#1#2~\small #3}
+\DeclareCaptionLabelFormat{caption-upm}{\textbf{#1 #2}}
+\DeclareCaptionLabelSeparator{caption-upm}{.}
+
+\captionsetup{
+    format=caption-upm,
+    labelformat=caption-upm,
+    labelsep=caption-upm,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuración general de espaciados, geometrías y otros
+%
+\setlength{\parskip}{1em}
+\linespread{1.2}
+\setlength{\parindent}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuración para PDF e hipervínculos
 %
 \RequirePackage[naturalnames]{hyperref}
 \makeatletter
@@ -317,81 +294,19 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Fuentes
-%
-\RequirePackage{microtype}
-\RequirePackage{fontspec}
-\RequirePackage{sansmath}
-
-\setmainfont{Crimson-Roman}[
-    Ligatures=TeX,
-    ItalicFont = {Crimson-Italic},
-    BoldFont = {Crimson-Semibold},
-    BoldItalicFont = {Crimson-SemiboldItalic}
-]
-
-\setsansfont[
-    Path=upm-report/fonts/Helvetica Neue LT/,
-    UprightFont = * 57 Condensed,
-    BoldFont = * 77 Bold Condensed,
-    ItalicFont = * 57 Condensed Oblique,
-    BoldItalicFont = * 77 Bold Condensed Oblique,
-]{Helvetica Neue LT}
-
-\setmonofont[
-    Path=upm-report/fonts/Fira Code/,
-    Extension=.ttf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    Scale=0.85
-]{firacode}
-
-% TODO Probar esta porque parece que se ve algo mejor en las fórmulas
-%\setmathsf{Latin Modern Sans}
-
-% Logos de LaTeX, BibTex, etc.
-\RequirePackage{dtk-logos}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Configuración general de espaciados
-%
-\setlength{\parskip}{1em}
-\linespread{1.2}
-\setlength{\parindent}{0pt}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Estilos de capítulos, secciones y párrafos
-%
-
-% Capítulo
-\makechapterstyle{upmstyle}{%
-    \renewcommand{\chapnamefont}{\normalfont\sffamily}
-    \renewcommand{\chapnumfont}{
-        \sffamily\fontsize{38}{38}\color{schoolcolor}\selectfont
-    }
-    \renewcommand{\chaptitlefont}{
-        \HUGE\sffamily\raggedleft\color{black}\selectfont
-    }
-    \renewcommand{\printchaptername}{}
-    \renewcommand{\chapternamenum}{}
-    \renewcommand{\printchapternum}{\chapnumfont \thechapter}
-    \renewcommand{\afterchapternum}{.\hfill}
-    \renewcommand{\afterchaptertitle}{\par\nobreak\medskip\hrule\vskip\afterchapskip}
-    
-}
-\chapterstyle{upmstyle}
-
-% TODO Intentar buscar unos estilos con un poco más de gusto
-\setsecheadstyle              {\huge\sffamily\raggedright}
-\setsubsecheadstyle           {\LARGE\sffamily\raggedright}
-\setsubsubsecheadstyle        {\Large\sffamily\raggedright}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Listados de código fuente
+% Estilos de los listados de código fuente
 %
 \RequirePackage{listings}
 \renewcommand{\lstlistingname}{Listado}
 \renewcommand*{\lstlistlistingname}{Índice de listados}
+
+\makeatletter
+\renewcommand\lstlistoflistings{\bgroup
+  \let\contentsname\lstlistlistingname
+  \def\l@lstlisting##1##2{\@dottedtocline{1}{1.5em}{2.3em}{##1}{##2}}
+  \let\lst@temp\@starttoc \def\@starttoc##1{\lst@temp{lol}}%
+  \tableofcontents \egroup}
+\makeatother
 
 \definecolor{sbase03}{HTML}{002B36}
 \definecolor{sbase02}{HTML}{073642}
@@ -413,78 +328,40 @@
     sensitive=true,
     aboveskip=\baselineskip,
     belowskip=\baselineskip,
-    % Border (above and below)
     frame=lines,
-    % Extra margin on line (align with paragraph)
     xleftmargin=\parindent,
-    % Put extra space under caption
     belowcaptionskip=1\baselineskip,
-    % Colors
-    % backgroundcolor=\color{sbase3},
     basicstyle=\color{sbase00}\ttfamily,
     keywordstyle=\color{scyan},
     commentstyle=\color{sbase1},
     stringstyle=\color{sblue},
     numberstyle=\color{sviolet},
     identifierstyle=\color{sbase00},
-    % Break long lines into multiple lines?
     breaklines=true,
-    % Show a character for spaces?
     showstringspaces=false,
     tabsize=2
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Manejo de PDF
-%
-\RequirePackage{pdflscape}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Fórmulas matemáticas
+% Licencia de la memoria
 %
-\RequirePackage{amsmath}
-
-\RequirePackage{verbatim}
-\RequirePackage{fancyvrb}
+\RequirePackage[%
+    type={CC},%
+    modifier={by-nc-sa},%
+    version={4.0}%
+]{doclicense}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Glosario
+% Referencias y bibliografía
 %
-\RequirePackage[acronym,noredefwarn]{glossaries}
-\makeglossaries
+\RequirePackage[backend=biber,style=ieee]{biblatex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Para tener los números de mes
+% Portada
 %
-\let\ordinal\relax
-\usepackage{datetime}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Secciones para agradecimientos, resumen y eso
-%
-\makeatletter
-\renewcommand{\abstract}[2]{%
-    \ifthenelse{\equal{#1}{spanish}}{\gdef\@abstractsp{#2}}{}%
-    \ifthenelse{\equal{#1}{english}}{\gdef\@abstracten{#2}}{}%
-}%
-\makeatother
-\makeatletter
-\newcommand{\keywords}[2]{%
-    \ifthenelse{\equal{#1}{spanish}}{\gdef\@keywordssp{#2}}{}%
-    \ifthenelse{\equal{#1}{english}}{\gdef\@keywordsen{#2}}{}%
-}%
-\makeatother
-
-\makeatletter
-\newcommand{\acknowledgements}[1]{\gdef\@acknowledgements{#1}}%
-\newcommand{\@acknowledgements}{\@latex@warning@no@line{No \noexpand\acknowledgements given}}
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Portada y primeras páginas
-%
-\makeatletter
-\def\@maketitle{%
-    % Portada
+\makeatletter         
+\renewcommand\maketitle{{
+    \sffamily
     \thispagestyle{empty}
     % Barra lateral izquierda y logo fondo
     \AddToShipoutPicture*{%
@@ -500,118 +377,192 @@
         }
     }
     \begin{adjustwidth}{1.5cm}{}
-        \sffamily
         {\large \MakeUppercase{\universityname}}\\*[1em]
         {\large \MakeUppercase{\textbf{\schoolname}}}\\*[1em]
         {\large \MakeUppercase{\reporttype}}\\*[1em]
         {\large \MakeUppercase{\textbf{\degreename}}}
         \vfill
-        {\HUGE \@title}\\*[0.3cm]
+        {\fontsize{38}{38}\selectfont\@title}\\*[0.3cm]
         \vfill
         \parbox[b]{\linewidth}{%
             \normalsize
-            \textbf{\ifthenelse{\equal{\authorsex}{m}}{Autor}{Autora}}: \theauthor\\*[1em]
+            \textbf{\ifthenelse{\equal{\authorsex}{m}}{Autor}{Autora}}: \@author\\*[1em]
             \textbf{\ifthenelse{\equal{\directorsex}{m}}{Director}{Directora}}: \@director\\*[1em]
-            Madrid, \monthname\xspace\the\year
+            Madrid, \@date
         }
     \end{adjustwidth}
     \normalfont
     \normalsize
+}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Licencia
+%
+\makeatletter
+\newcommand\makelicense{{
+    \clearpage
+    \thispagestyle{empty}
+    ~\vfill
+    %\setlength{\parindent}{0pt}
+    %\setlength{\parskip}{\baselineskip}
+    \@author
+    \par{
+        \textit{\@title}\\
+        \reporttype, \today\\
+        \textbf{\ifthenelse{\equal{\directorsex}{m}}%
+            {Director}%
+            {Directora}%
+        }: \@director
+    }
     
-	\clearpage
-	
-	% Licencia
-	\thispagestyle{empty}
-	~\vfill
-	\setlength{\parindent}{0pt}
-	\setlength{\parskip}{\baselineskip}
-	\theauthor
-	\par{
-		\textit{\@title}\\
-		\reporttype, \textspanish{\today}\\
-		\textbf{\ifthenelse{\equal{\directorsex}{m}}{Director}{Directora}}: \@director
-	}
-	
-	\par{
-		\textbf{\schoolname}\\
-		\schooladdress
-	}
-	
-	\par{
-    \doclicenseThis
- }
-
- \par{
- \footnotesize Obra derivada de \href{https://github.com/blazaid/UPM-Report-Template}{https://github.com/blazaid/UPM-Report-Template}. Todo cambio y modificación respecto a la obra original son responsabilidad exclusiva del presente autor.
- }
+    \par{
+        \textbf{\schoolname}\\
+        \schooladdress
+    }
     
- \clearpage
- 
- % Resumen
-	\thispagestyle{empty}
-    \chapter*{Resumen}
-	\@abstractsp
-	
-	\textbf{Palabras clave}: \@keywordssp
+    \par{
+        \doclicenseThis
+    }
+    
+    \par{
+    \footnotesize Obra derivada de \href{https://github.com/blazaid/UPM-Report-Template}{https://github.com/blazaid/UPM-Report-Template}. Todo cambio y modificación respecto a la obra original son responsabilidad exclusiva del presente autor.
+    }
+ }}
+\makeatother
 
-    % Abstract
-	\thispagestyle{empty}
-    \chapter*{Abstract}
-	\@abstracten
-	
-	\textbf{Keywords}: \@keywordsen
-
-    % Agradecimientos
-	\thispagestyle{empty}
-	\selectlanguage{spanish}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Agradecimientos
+%
+\makeatletter
+\newcommand{\acknowledgements}[1]{\gdef\@acknowledgements{#1}}%
+\newcommand{\@acknowledgements}{\@latex@warning@no@line{No \noexpand\acknowledgements given}}
+\newcommand\makeacknowledgements{{
+    \clearpage
+    \thispagestyle{empty}
     \chapter*{Agradecimientos}
     \@acknowledgements
+}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Resumen y abstract
+%
+\makeatletter
+\newcommand{\abstract}[2]{%
+    \ifthenelse{\equal{#1}{spanish}}{\gdef\@abstractsp{#2}}{}%
+    \ifthenelse{\equal{#1}{english}}{\gdef\@abstracten{#2}}{}%
+}%
+\newcommand{\keywords}[2]{%
+    \ifthenelse{\equal{#1}{spanish}}{\gdef\@keywordssp{#2}}{}%
+    \ifthenelse{\equal{#1}{english}}{\gdef\@keywordsen{#2}}{}%
+}%
+
+\newcommand\makeresumen{{
+    \clearpage
+    \thispagestyle{empty}
+    \chapter*{Resumen}
+    \@abstractsp
+    \textbf{Palabras clave}: \@keywordssp
+}}
+
+\newcommand\makeabstract{{
+    \clearpage
+    \thispagestyle{empty}
+    \chapter*{Abstract}
+    \@abstracten
+    \textbf{Keywords}: \@keywordsen
+}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glosario
+%
+\RequirePackage[acronym,noredefwarn]{glossaries}
+\makeglossaries
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cómo citar
+%
+\makeatletter         
+\newcommand{\makehowtocite}{%
+\clearpage
+\thispagestyle{empty}
+Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguiente:
+% TODO Arreglar esto para que tenga un mejor estilo
+% TODO Generar la citation key a partir del año, el nombre del autor y el título del proyecto
+\begin{verbatim}
+@phdthesis{citation\_key,\\
+    author="\theauthor"\\
+    title="\@title",\\
+    school="\schoolname",\\
+    year=\the\year\\
 }
-
-\AtBeginDocument{%
-    % Portada y demás elementos
-    \maketitle
+\end{verbatim}
 }
+\makeatother
 
-% Páginas y procesos a ejecutar al final de la compilación
-\AtEndDocument{
-    % Glosario
-    % TODO Añadirlo sólo si existe alguna entrada en el glosario
-    \printglossary
-
-    % Índice
-    % TODO Añadirlo sólo si existe alguna entrada en el índice
-    %\printindex
-
-    % Página de cómo citar
-    %\clearpage
-	%\thispagestyle{empty}
-	%\vspace*{\fill}
-
-    %Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguiente:
-    % TODO Arreglar esto para que tenga un mejor estilo
-    % TODO Generar la citation key a partir del año, el nombre del autor y el título del proyecto
-%\begin{verbatim}
-%@phdthesis{citation\_key,\\
-%    author="\theauthor"\\
-%    title="\@title",\\
-%    school="\schoolname",\\
-%    year=\the\year\\
-%}
-%\end{verbatim}
-    % Página de cubierta trasera
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cubierta trasera
+%
+\makeatletter         
+\newcommand{\makebackcover}{
     \clearpage
     \thispagestyle{empty}
     \pagecolor{schoolcolor}
     \AddToShipoutPicture*{%
         \put(0,0){%
             \colorbox{black}{%
-                \parbox[b][10cm]{\paperwidth}{\vfill\hfill}
+                \parbox[b][12cm]{\paperwidth}{\vfill\hfill}
             }%
         }
     }
     \vspace*{\fill}
-    \begin{center}\includegraphics[width=6cm]{\schoollogo}\end{center}
+    \begin{center}
+        \includegraphics[width=6cm]{\schoollogo}
+    \end{center}
 }
-
 \makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Elementos del comienzo del documento
+%
+\makeatletter
+\AtBeginDocument{%
+    % TODO Hacer que las secciones aparezcan sólo si tienen algo definido
+    \maketitle
+    \makelicense
+    \makeacknowledgements
+    \makeresumen
+    \makeabstract
+    
+    \frontmatter
+
+    \begingroup
+        \let\clearpage\relax
+        \tableofcontents
+        \listoffigures
+        \listoftables
+        \lstlistoflistings
+    \endgroup
+
+    \mainmatter
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Elementos del fin del documento
+%
+\makeatletter
+\AtEndDocument{
+    \backmatter
+
+    \printbibliography
+    \printglossary
+    %\printindex  TODO Hacer el índice (por supuesto opcional)
+    %\makehowtocite
+    \makebackcover
+}
+\makeatother
+
+\endinput
