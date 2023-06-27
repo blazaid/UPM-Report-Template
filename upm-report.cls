@@ -12,6 +12,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Paquetes globales
 %
+\RequirePackage[%
+    titletoc
+    ]{appendix}             % "Apéndice" antes del nombre del capítulo
 \RequirePackage{awesomebox} % Bloques de texto más molones
 \RequirePackage{changepage} % Para poder usar los adjustwidth
 \RequirePackage{csquotes}   % Facilitar el trabajo con citas
@@ -463,6 +466,7 @@
     \thispagestyle{empty}
     \chapter*{Resumen}
     \@abstractsp
+
     \textbf{Palabras clave}: \@keywordssp
 }}
 
@@ -471,6 +475,7 @@
     \thispagestyle{empty}
     \chapter*{Abstract}
     \@abstracten
+
     \textbf{Keywords}: \@keywordsen
 }}
 \makeatother
@@ -478,7 +483,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glosario
 %
-\RequirePackage[acronym,noredefwarn]{glossaries}
+\usepackage[acronym, section]{glossaries}
+\renewcommand*{\glsclearpage}{}
 \makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -558,7 +564,8 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
     \backmatter
 
     \printbibliography
-    \printglossary
+    \chapter*{Índice de términos}
+    \printglossaries
     %\printindex  TODO Hacer el índice (por supuesto opcional)
     %\makehowtocite
     \makebackcover
