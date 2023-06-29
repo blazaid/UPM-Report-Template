@@ -219,27 +219,30 @@
 \RequirePackage{fontspec}  % Para importar fuentes externas
 \RequirePackage{microtype} % Mejoras tipográficas generales
 
-\setmainfont{Crimson-Roman}[
-    Ligatures=TeX,
-    ItalicFont={Crimson-Italic},
-    BoldFont={Crimson-Semibold},
-    BoldItalicFont={Crimson-SemiboldItalic}
-]
+\setmainfont[
+    Path=upm-report/fonts/Montserrat/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-SemiBold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-SemiBoldItalic,
+]{Montserrat}
 
 \setsansfont[
-    Path=upm-report/fonts/Helvetica Neue LT/,
-    UprightFont=* 57 Condensed,
-    BoldFont=* 77 Bold Condensed,
-    ItalicFont=* 57 Condensed Oblique,
-    BoldItalicFont=* 77 Bold Condensed Oblique,
-]{Helvetica Neue LT}
+    Path=upm-report/fonts/Barlow Condensed/,
+    Extension=.ttf,
+    UprightFont=*-Medium,
+    BoldFont=*-Bold,
+    ItalicFont=*-MediumItalic,
+    BoldItalicFont=*-BoldItalic,
+]{BarlowCondensed}
 
 \setmonofont[
     Path=upm-report/fonts/Fira Code/,
     Extension=.ttf,
     UprightFont=*-regular,
     BoldFont=*-bold,
-    Scale=0.85
+    %Scale=0.85
 ]{firacode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -252,6 +255,7 @@
 % Configuración de figuras y tablas
 %
 \RequirePackage{float}      % Mejorar colocación de elementos flotantes
+\RequirePackage{tabularx}   % Tablas más configurables
 \RequirePackage{booktabs}   % Configuraciones para tablas más bonitas
 \RequirePackage{caption}    % Mejora de pies de figuras
 \RequirePackage{subcaption} % Pies de subfiguras
@@ -544,6 +548,7 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
     
     \frontmatter
 
+    % Para hacer condicionales las tablas https://tex.stackexchange.com/questions/297600/conditional-list-of-listings-lstlistoflistings-only-if-listings-are-present
     \begingroup
         \let\clearpage\relax
         \tableofcontents

@@ -1,17 +1,17 @@
 \chapter{Figuras, tablas, ecuaciones y fuentes}
 
-En este capítulo vamos a hablar de los elementos denominados ``flotantes'' o \textit{floats}. Estos elementos son bloques de contenido que ``flotan'' por la página hasta que \LaTeX\space los coloca donde considera a través de ciertos algoritmos.
+En este capítulo vamos a hablar de los elementos denominados \enquote{flotantes} o \textit{floats}. Estos elementos son bloques de contenido que ``flotan'' por la página hasta que \LaTeX\space los coloca donde considera a través de ciertos algoritmos.
 
 Lo general es declarar el elemento flotante inmediatamente \textbf{después} del párrafo donde se ha referenciado, y después dejar que \LaTeX\space elija el mejor sitio. Y si después de haber escrito todo el documento hay algo que no cuadre, pues ahí modificarlo.
 
-Una pregunta típica es la siguiente: ``¿oye, y si no hago referencia a un elemento flotante, dónde lo pongo?'' La respuesta es sencilla: no se pone. Generalmente, si hay algo que no merece ser nombrado, tampoco tiene mucho sentido que aparezca. Remarco eso de ``generalmente''; lo mismo existe algún caso donde sí tiene sentido, pero así, para empezar, es muy raro.
+\enquote{¿Y si no hago referencia a un elemento flotante, dónde lo pongo?} Respuesta general rápida: no se pone. Generalmente, si no se mencina a algo en el texto, no tiene sentido que esté ahí. Remarco eso de \enquote{generalmente}; lo mismo existe algún caso donde sí tiene sentido, pero así, para empezar, es muy raro.
 
 Aunque más adelante veremos los diferentes tipos de \textit{floats}, en caso de que queramos modificar su comportamiento todos tienen los especificadores de posición indicados en la tabla~\ref{tab:floats-options}:
 
 \begin{table}
     \caption{\label{tab:floats-options}Opciones para los elementos flotantes de \LaTeX}
     \centering
-    \begin{tabular}{@{}ll@{}}
+    \begin{tabularx}{\textwidth}{@{}lX@{}}
         \toprule
         \textbf{Especificador} & \textbf{Acción} \\
         \midrule
@@ -22,7 +22,7 @@ Aunque más adelante veremos los diferentes tipos de \textit{floats}, en caso de
         p & Colocar en una página exclusiva para elementos ``flotantes''       \\
         ! & Forzar las indicaciones y obviar los mecanismos internos de \LaTeX \\
     \bottomrule
-    \end{tabular}
+    \end{tabularx}
 \end{table}
 
 \section{Figuras}
@@ -126,7 +126,7 @@ Cuando en lugar de poner una ecuación dentro de un párrafo existente la querem
 
 Sin embargo, en el caso de que quisiésemos más de una ecuación en el mismo bloque haríamos uso del carácter \& para indicar en qué punto se alinean las ecuaciones; por ejemplo:
 
-\begin{minipage}[h]{.5\textwidth}
+\begin{minipage}[t]{.5\textwidth}
 \begin{lstlisting}[language=tex]
 \begin{align}
     u  &= \arctan x \\ 
