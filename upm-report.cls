@@ -350,6 +350,17 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listados condicionales
+%
+\RequirePackage[
+    figure,table,lstlisting
+    ]{totalcount}  % Contar las veces que aparecen entradas en listados
+
+\newcommand\conditionalLoF{\iftotalfigures\listoffigures\fi}
+\newcommand\conditionalLoT{\iftotaltables\listoftables\fi}
+\newcommand\conditionalLoL{\iftotallstlistings\lstlistoflistings\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Licencia de la memoria
 %
 \RequirePackage[%
@@ -548,13 +559,15 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
     
     \frontmatter
 
-    % Para hacer condicionales las tablas https://tex.stackexchange.com/questions/297600/conditional-list-of-listings-lstlistoflistings-only-if-listings-are-present
     \begingroup
         \let\clearpage\relax
         \tableofcontents
-        \listoffigures
-        \listoftables
-        \lstlistoflistings
+        %\listoffigures
+        \conditionalLoF
+        %\listoftables
+        \conditionalLoT
+        %\lstlistoflistings
+        \conditionalLoL
     \endgroup
 
     \mainmatter
