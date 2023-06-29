@@ -454,12 +454,14 @@
 %
 \makeatletter
 \newcommand{\acknowledgements}[1]{\gdef\@acknowledgements{#1}}%
-\newcommand{\@acknowledgements}{\@latex@warning@no@line{No \noexpand\acknowledgements given}}
+\newcommand{\@acknowledgements}{}
 \newcommand\makeacknowledgements{{
-    \clearpage
-    \thispagestyle{empty}
-    \chapter*{Agradecimientos}
-    \@acknowledgements
+    \ifthenelse{\equal{\@acknowledgements}{}}{}{
+        \clearpage
+        \thispagestyle{empty}
+        \chapter*{Agradecimientos}
+        \@acknowledgements
+    }
 }}
 \makeatother
 
