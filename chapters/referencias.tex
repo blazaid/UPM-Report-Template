@@ -39,28 +39,3 @@ AQUÍ CONTAR LAS DIFERENTES OPCIONES PARA REFERENCIAR ARTÍCULOS. PONGO LA BÁSI
 \section{Referencias cruzadas}
 
 \section{Referencias a recursos externos}
-
-\section{Glosario y acrónimos}
-\label{s:glosario}
-
-Para gestionar el glosario, (e.g. lo que se usa cuando decimos \enquote{me encanta \gls{python}} y el lector no sabe lo que es) y los acrónimos (e.g. cuando hablamos a lo largo del texto de \gls{ia} y queremos que en el resto el texto aparezca su versión corta \gls{ia}) se hace uso del paquete \texttt{glossaries}. Es, quizá, algo complejo de configurar ya que permite muchas opciones diferentes.
-
-Aquí proponemos una configuración por defecto para que lo único que haya que hacer sea añadir y referenciar las entradas.
-
-\subsection{Definiendo los términos del glosario}
-
-\begin{lstlisting}[language=TeX]
-\newglossaryentry{ex}{
-    name={sample},
-    description={an example}
-}
-\end{lstlisting}
-
-\section{Índice}
-\label{s:indice}
-
-El índice\index{índice} de un libro\index{libro} es la parte que normalmente está situada al final donde aparece una relación de todos los términos\index{término} relevantes del texto y dónde se encuentran
-
-Para marcar una palabra como índice, basta con añadir tras ella el comando \texttt{\index{término}}. Tras ello, la página de dicha palabra aparecerá referenciada en dicho término en el índice.
-
-Si no hay ningún término en el índice, este no se mostrará.

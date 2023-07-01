@@ -2,3 +2,101 @@
 \label{ch:soa}
 
 Aquí tenemos que hablar de los componentes que tenemos disponibles y cómo se utilizan: labels para referencias cruzadas, bibliografía, tablas, imágenes, columnas, cuadros, enlaces de hipertexto, código fuente, algoritmos, fórmulas etcétera.
+
+\section{Glosario}
+\label{s:glosario}
+
+El glosario de una memoria es el lugar donde se encuentran los términos que se usan a lo largo del documento y que se considera que requieren una aclaración. En esta plantilla, en el momento que generemos un término, se creará un capítulo al final de la memoria con el listado de todos aquellos términos definidos.
+
+Para gestionar el glosario se hace uso del paquete \texttt{glossaries} el cual es relativamente complejo de configurar. También su documentación es muy extensa\footnote{Pero aún así es el sitio donde ir a buscar información. El paquete, junto con su documentación está disponible en la dirección \href{https://www.ctan.org/pkg/glossaries}{https://www.ctan.org/pkg/glossaries}.}, así que en esta sección hablaremos únicamente de lo esencial.
+
+\subsection{¿Cuándo y cómo especificar términos?}
+
+La regla general del \enquote{cuándo} es una vez terminada la memoria. En ese punto, seremos conscientes de qué términos son los más interesantes para incluir en el glosario. En ese punto deberemos ir término por termino sustituyéndolo por la entrada del glosario para que el proceso automático se encarge de la indexación y numeración de páginas.
+
+El \enquote{cómo} se refiere a de qué manera escribirlos. La regla general en el castellano (y hasta donde el autor de la plantilla sabe, en cualquier idioma) es de la manera en la que aparecería en medio del texto. Es decir, si la palabra se escribe generalmente en minúscula (e.g.~\textit{El jugador blandía un \gls{hacha-batalla}}) se deberá incluir dentro del glosario en minúscula, mientras que si se escribe generalmente en mayúscula (e.g.~\textit{Encontró el \gls{arco-perdicion}}) irá en mayúscula.
+
+\subsection{Definiendo los términos del glosario}
+
+Las entradas se escribirán dentro del fichero \texttt{frontmatter/glossary.tex}. La forma estándar de definir un término es la que se muestra en el listado~\ref{lst:std-glossary-entry}.
+
+\begin{lstlisting}[language={[latex]TeX},caption=Código para crear una entrada en el glosario,label=lst:std-glossary-entry]
+\newglossaryentry{hacha-batalla}{
+    name={hacha de batalla},
+    description={Herramienta antigua utilizada en combate}
+}
+\end{lstlisting}
+
+Luego, dentro del texto, podremos hacer referencia a dichas entradas con los comandos que se muestran en la tabla~\ref{tab:glossary-commands}.
+
+\begin{table}[h]
+    \caption{\label{tab:glossary-commands}Comandos para incluir términos del glosario en el texto de la memoria}
+    \begin{tabularx}{\textwidth}{@{}lX@{}}
+        \toprule
+        \textbf{Comando} & \textbf{Ejemplo con la clave \texttt{hacha-batalla}} \\
+        \midrule
+        \texttt{\textbackslash gls} & \gls{hacha-batalla} \\
+        \texttt{\textbackslash Gls} & \Gls{hacha-batalla} \\
+        \texttt{\textbackslash glspl} & \glspl{hacha-batalla} \\
+        \texttt{\textbackslash Glslp} & \Glspl{hacha-batalla} \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Como los plurales los gestiona automáticamente, puede ser que queramos, como en este caso, modificar el plural de nuestro término. Para ello debemos añadir la opción \texttt{plural} a la entrada para especificar cómo es el plural de la entrada, como se muestra en el listado~\ref{lst:gls-longplural}.
+
+\begin{lstlisting}[language={[latex]TeX},caption=Especificando el plural para un término del glosario,label=lst:gls-longplural]
+\newglossaryentry{python}{
+    name={Python},
+    plural={Pythonacos},
+    description={El mejor lenguaje de programación}
+}
+\end{lstlisting}
+
+Así, el plural de la clave \texttt{python} descrita quedaría como \glspl{python}, en lugar del valor por defecto que sería \textit{Pythons}.
+
+Un caso particular de términos del glosario son las siglas y los acrónimos. No vamos a entrar en detalle aquí\footnote{Pero recomendamos visitar \href{https://www.fundeu.es/recomendacion/siglas-y-acronimos-claves-de-redaccion/}{https://www.fundeu.es/recomendacion/siglas-y-acronimos-claves-de-redaccion/} y darle una leída porque es interesante.} sino que vamos a introducir las siglas como caso especial de entrada de glosario. Cuando tengamos una sigla, la crearemos en el glosario como se muestra en el listado~\ref{lst:new-acronym}.
+
+\begin{lstlisting}[language={[latex]TeX},caption=Entrada genérica de una sigla o acrónimo en el glosario,label=lst:new-acronym]
+\newacronym[
+    description={Proyecto Fin de Grado. Proyecto a realizar al final de una titulación de Grado},
+    longplural={Proyectos Fin de Grado}
+    ]{pfg}{PFG}{Proyecto Fin de Grado}
+\end{lstlisting}
+
+En el ejemplo se puede ver que hay dos entradas, \texttt{longplural} y \texttt{description} que son opcionales. La primera es la equivalente a \texttt{plural} de \texttt{newglossaryentry}, y no necesita más explicación.
+
+La segunda, \texttt{description} suele utilizarse para acrónimos, cuando necesitamos describir la entrada. Cuidado en este caso porque si hace referencia a varias palabras estas se deberían incluir dentro de la descripción (como en el ejemplo, \enquote{\acrlong{pfg}}).
+
+La regla general de los acrónimos y las siglas es que la primera vez que aparecen en el texto, deben aparecer con el nombre completo mientras que el resto de veces pueden aparecer indistintamente como sigla o forma larga. De esto se encarga automáticamente el comando \texttt{gls}. Es decir, si tenemos la sigla \texttt{special}, la primera vez que incluyamos la sigla con \texttt{\textbackslash gls\{special\}} saldrá \gls{special} mientras que el resto de veces que la incluyamos se verá simplemente \gls{special}.
+
+Con los acrónimos se incluyen comandos adicionales para controlar su presentación. Estos son los mostrados en la tabla~\ref{tab:acronym-commands}
+
+\begin{table}[h]
+    \caption{\label{tab:acronym-commands}Comandos específicos para controlar la presentación de acrónimos}
+    \begin{tabularx}{\textwidth}{@{}lX@{}}
+        \toprule
+        \textbf{Comando} & \textbf{Ejemplo con la clave \texttt{rpg}} \\
+        \midrule
+        \texttt{\textbackslash acrshort} & \acrshort{rpg} \\
+        \texttt{\textbackslash acrshortpl} & \acrshortpl{rpg} \\
+        \texttt{\textbackslash acrlong} & \acrlong{rpg} \\
+        \texttt{\textbackslash Acrlong} & \Acrlong{rpg} \\
+        \texttt{\textbackslash acrlongpl} & \acrlongpl{rpg} \\
+        \texttt{\textbackslash Acrlongpl} & \Acrlongpl{rpg} \\
+        \texttt{\textbackslash acrfull} & \acrfull{rpg} \\
+        \texttt{\textbackslash Acrfull} & \Acrfull{rpg} \\
+        \texttt{\textbackslash acrfullpl} & \acrfullpl{rpg} \\
+        \texttt{\textbackslash Acrfullpl} & \Acrfullpl{rpg} \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Por cierto, en castellano las siglas \textbf{no incluyen la \enquote{s} al final}, así que no deberíamos usar los comandos que terminan en \texttt{pl}. Por eso la definición que se ha hecho de la sigla \texttt{rpg} es la mostrada en la figura~\ref{fig:acronym-rpg}.
+
+\begin{lstlisting}[language={[latex]TeX},caption=Entrada de \texttt{rpg} en \texttt{glossaries.tex},label=fig:acronym-rpg]
+\newacronym[
+    description={Role-Playing Game. Juego de rol},
+    shortplural={RPG}
+    ]{rpg}{RPG}{\textit{Role-Playing Game}}
+\end{lstlisting}

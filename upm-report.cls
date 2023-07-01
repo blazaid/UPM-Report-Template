@@ -172,6 +172,7 @@
 % Cabeceras y pies de página
 %
 \RequirePackage{fancyhdr}
+\setlength{\headheight}{15.1pt}
 \pagestyle{fancy}
 
 % Estilos globales
@@ -256,6 +257,9 @@
 %
 \RequirePackage{float}      % Mejorar colocación de elementos flotantes
 \RequirePackage{tabularx}   % Tablas más configurables
+\newcolumntype{C}{%
+    >{\centering\arraybackslash}X%
+    }                       % Para tener columnas tipo X centradas
 \RequirePackage{booktabs}   % Configuraciones para tablas más bonitas
 \RequirePackage{caption}    % Mejora de pies de figuras
 \RequirePackage{subcaption} % Pies de subfiguras
@@ -562,13 +566,10 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
     \frontmatter
 
     \begingroup
-        \let\clearpage\relax
+        %\let\clearpage\relax
         \tableofcontents
-        %\listoffigures
         \conditionalLoF
-        %\listoftables
         \conditionalLoT
-        %\lstlistoflistings
         \conditionalLoL
     \endgroup
 
