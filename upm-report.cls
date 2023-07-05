@@ -20,6 +20,7 @@
 \RequirePackage{csquotes}   % Facilitar el trabajo con citas
 \RequirePackage{eso-pic}    % Colores y fondos
 \RequirePackage{graphicx}   % Mejoras sobre el paquete graphics
+\RequirePackage{hologo}     % Para poner logos relacionados con LaTeX
 \RequirePackage{ifthen}     % Para poder usar condicionales en la clase
 \RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
 \RequirePackage{xcolor}     % Mejoras sobre el paquete color
@@ -149,14 +150,19 @@
 % Variables
 %
 \makeatletter
+\newcommand{\bibauthor}[1]{\gdef\@bibauthor{#1}}%
+\newcommand{\@bibauthor}{\@latex@warning@no@line{No \noexpand\bibauthor given}}
 \newcommand{\director}[1]{\gdef\@director{#1}}%
-\newcommand{\@director}{\@latex@warning@no@line{No \noexpand\director given}}\makeatother
+\newcommand{\@director}{\@latex@warning@no@line{No \noexpand\director given}}
+\newcommand{\bibdirector}[1]{\gdef\@bibdirector{#1}}%
+\newcommand{\@bibdirector}{\@latex@warning@no@line{No \noexpand\bibdirector given}}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Idioma
 %
 % TODO Convertir el lenguaje en una opción del paquete
-\RequirePackage[spanish,es-tabla]{babel}
+\RequirePackage[spanish,es-tabla,es-ucroman]{babel}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Geometría general de las páginas
@@ -243,7 +249,7 @@
     Extension=.ttf,
     UprightFont=*-regular,
     BoldFont=*-bold,
-    %Scale=0.85
+    Scale=0.8
 ]{firacode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -373,6 +379,25 @@
     version={4.0}%
 ]{doclicense}
 
+\makeatletter
+% Impresión de licencia modificada para que incluya más cosas. Es un
+% clon de \docLicenseThis
+\newcommand{\licencia}{%
+    \setlength{\doclicense@hsize}{\linewidth-\doclicense@imagewidth-\doclicense@imagedistance}%
+    \begin{center}
+        \begin{minipage}{\doclicense@hsize}
+            \ifthenelse{\isempty{\doclicense@hyphenation}}{}{%
+                \@nameuse{\doclicense@hyphenation} 
+            }%
+            \doclicenseLongText Obra derivada de \href{https://github.com/blazaid/UPM-Report-Template}{https://github.com/blazaid/UPM-Report-Template}.%
+        \end{minipage}
+        \hfill
+        \begin{minipage}{\doclicense@imagewidth}\doclicenseImage\end{minipage}
+    \end{center}
+    \vspace{-1.5em}
+    Todo cambio respecto a la obra original es responsabilidad exclusiva del presente autor.\\
+}
+\makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Referencias y bibliografía
 %
@@ -423,15 +448,17 @@
 %
 \makeatletter
 \newcommand\makelicense{{
+    \footnotesize
     \clearpage
     \thispagestyle{empty}
     ~\vfill
-    %\setlength{\parindent}{0pt}
-    %\setlength{\parskip}{\baselineskip}
-    \@author
     \par{
         \textit{\@title}\\
         \reporttype, \today\\
+        \textbf{\ifthenelse{\equal{\authorsex}{m}}%
+            {Autor}%
+            {Autora}%
+        }: \@author\\
         \textbf{\ifthenelse{\equal{\directorsex}{m}}%
             {Director}%
             {Directora}%
@@ -442,14 +469,25 @@
         \textbf{\schoolname}\\
         \schooladdress
     }
-    
+    \newline
+    \hrule
     \par{
-        \doclicenseThis
+        Si deseas citar este trabajo, la entrada completa en \hologo{BibTeX} es la siguiente:
+
+        \texttt{%
+            @mastersthesis\{citekey,\\
+                title   = \{\@title\},\\
+                author  = \{\@bibauthor~\& \@bibdirector \}\\
+                school  = \{\schoolname\},\\
+                year    = \{\the\year\},\\
+                month   = \{\the\month\},\\
+                type    = \{\reporttype\}\\
+            \}
+        }
     }
-    
-    \par{
-    \footnotesize Obra derivada de \href{https://github.com/blazaid/UPM-Report-Template}{https://github.com/blazaid/UPM-Report-Template}. Todo cambio y modificación respecto a la obra original son responsabilidad exclusiva del presente autor.
-    }
+    \newline
+    \hrule
+    \vspace*{-0.5cm}\par{\licencia}
  }}
 \makeatother
 
@@ -504,30 +542,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glosario
 %
-\usepackage[acronym, section]{glossaries}
+\RequirePackage[acronym,section,nowarn]{glossaries}
+% Hacemos que no haya salto de página entre glosario y siglas
 \renewcommand*{\glsclearpage}{}
 \makeglossaries
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Cómo citar
-%
-\makeatletter         
-\newcommand{\makehowtocite}{%
-\clearpage
-\thispagestyle{empty}
-Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguiente:
-% TODO Arreglar esto para que tenga un mejor estilo
-% TODO Generar la citation key a partir del año, el nombre del autor y el título del proyecto
-\begin{verbatim}
-@phdthesis{citation\_key,\\
-    author="\theauthor"\\
-    title="\@title",\\
-    school="\schoolname",\\
-    year=\the\year\\
-}
-\end{verbatim}
-}
-\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cubierta trasera
@@ -556,7 +574,6 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
 %
 \makeatletter
 \AtBeginDocument{%
-    % TODO Hacer que las secciones aparezcan sólo si tienen algo definido
     \maketitle
     \makelicense
     \makeacknowledgements
@@ -566,7 +583,6 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
     \frontmatter
 
     \begingroup
-        %\let\clearpage\relax
         \tableofcontents
         \conditionalLoF
         \conditionalLoT
@@ -588,7 +604,6 @@ Si deseas citar este trabajo, la entrada completa en \BibTeX\xspace es la siguie
     \chapter*{Índice de términos}
     \printglossaries
     %\printindex  TODO Hacer el índice (por supuesto opcional)
-    %\makehowtocite
     \makebackcover
 }
 \makeatother
