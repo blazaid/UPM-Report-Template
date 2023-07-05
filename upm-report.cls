@@ -29,6 +29,7 @@
 % Valores constantes
 %
 \def\universityname{Universidad Politécnica de Madrid}
+\def\templaterepository{https://github.com/blazaid/UPM-Report-Template}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Opciones de la clase
@@ -169,7 +170,7 @@
 %
 \RequirePackage[
     top=3.5cm,
-    bottom=3.5cm,
+    bottom=3cm,
     left=2.5cm,
     right=2.5cm,
 ]{geometry}
@@ -249,7 +250,6 @@
     Extension=.ttf,
     UprightFont=*-regular,
     BoldFont=*-bold,
-    Scale=0.8
 ]{firacode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -389,7 +389,7 @@
             \ifthenelse{\isempty{\doclicense@hyphenation}}{}{%
                 \@nameuse{\doclicense@hyphenation} 
             }%
-            \doclicenseLongText Obra derivada de \href{https://github.com/blazaid/UPM-Report-Template}{https://github.com/blazaid/UPM-Report-Template}.%
+            \doclicenseLongText Obra derivada de \href{\templaterepository}{\templaterepository}.%
         \end{minipage}
         \hfill
         \begin{minipage}{\doclicense@imagewidth}\doclicenseImage\end{minipage}
