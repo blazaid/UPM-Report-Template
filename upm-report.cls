@@ -50,6 +50,17 @@
 \newcommand{\schoolabbr}{}
 \newcommand{\schoollogo}{}
 \newcommand{\schooladdress}{}
+\ifthenelse{\equal{\@upm@school}{etsidi}}{%
+    \renewcommand{\schoolname}{E.T.S. de Ingeniería y Diseño Industrial}
+    \renewcommand{\schoolabbr}{ETSIDI}
+    \renewcommand{\schoollogo}{upm-report/logos/logo-etsidi.png}
+    \renewcommand{\schooladdress}{%
+        c/ Ronda de Valencia, 3\\
+        28012, Madrid, España
+    }
+    \definecolor{schoolcolor}{RGB}{223,30,64}
+    \definecolor{linkcolor}{RGB}{223,30,64}
+}{}
 \ifthenelse{\equal{\@upm@school}{etsii}}{%
     \renewcommand{\schoolname}{E.T.S. de Ingenieros Industriales}
     \renewcommand{\schoolabbr}{ETSII}
@@ -106,12 +117,31 @@
 % Variables relacionadas con el título de estudios (arg. 'degree')
 \newcommand{\degreecode}{}
 \newcommand{\degreename}{}
+%% ETSIDI
+\ifthenelse{\equal{\@upm@degree}{56IE}}{
+    \renewcommand{\degreecode}{56IE}
+    \renewcommand{\degreename}{Grado en Ingeniería Eléctrica}
+}{}
+\ifthenelse{\equal{\@upm@degree}{56IA}}{
+    \renewcommand{\degreecode}{56IA}
+    \renewcommand{\degreename}{Grado en Ingeniería Electrónica Industrial y Automática}
+}{}
+\ifthenelse{\equal{\@upm@degree}{56IM}}{
+    \renewcommand{\degreecode}{56IM}
+    \renewcommand{\degreename}{Grado en Ingeniería Mecánica}
+}{}
+\ifthenelse{\equal{\@upm@degree}{56IQ}}{
+    \renewcommand{\degreecode}{56IQ}
+    \renewcommand{\degreename}{Grado en Ingeniería Química}
+}{}
+\ifthenelse{\equal{\@upm@degree}{56DD}}{
+    \renewcommand{\degreecode}{56DD}
+    \renewcommand{\degreename}{Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto}
+}{}
 %% ETSISI
 \ifthenelse{\equal{\@upm@degree}{61CD}}{
     \renewcommand{\degreecode}{61CD}
-    \renewcommand{\degreename}{%
-        Grado en Ciencia de Datos e Inteligencia Artificial
-    }
+    \renewcommand{\degreename}{Grado en Ciencia de Datos e Inteligencia Artificial}
 }{}
 \ifthenelse{\equal{\@upm@degree}{61CI}}{
     \renewcommand{\degreecode}{61CI}
@@ -127,8 +157,7 @@
 }{}
 \ifthenelse{\equal{\@upm@degree}{61TI}}{
     \renewcommand{\degreecode}{61TI}
-    \renewcommand{\degreename}{%
-        Grado en Tecnologías para la Sociedad de la Información
+    \renewcommand{\degreename}{Grado en Tecnologías para la Sociedad de la Información
     }
 }{}
 \ifthenelse{\equal{\degreecode}{}}{
@@ -226,7 +255,7 @@
 %
 \RequirePackage{fontspec}  % Para importar fuentes externas
 \RequirePackage{microtype} % Mejoras tipográficas generales
-
+% TODO Cambiar los tipos de letra según la guía de estilos de la escuela
 \setmainfont[
     Path=upm-report/fonts/Montserrat/,
     Extension=.ttf,
