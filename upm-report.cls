@@ -43,6 +43,7 @@
 \DeclareStringOption{degree}
 \DeclareStringOption{authorsex}
 \DeclareStringOption{directorsex}
+\DeclareStringOption{codirectorsex}
 \ProcessKeyvalOptions*
 
 % Variables relacionadas con la escuela (arg. 'school')
@@ -176,6 +177,9 @@
     \PackageError{upm-report}{Director sex}{Falta el parámetro 'directorsex'}
 }{}
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables
 %
@@ -186,6 +190,28 @@
 \newcommand{\@director}{\@latex@warning@no@line{No \noexpand\director given}}
 \newcommand{\bibdirector}[1]{\gdef\@bibdirector{#1}}%
 \newcommand{\@bibdirector}{\@latex@warning@no@line{No \noexpand\bibdirector given}}
+
+
+
+
+\newcommand{\codirector}[3][]{%
+    \ifthenelse{\equal{#1}{}}{%
+        % Si el argumento opcional está vacío, establece sólo el nombre del codirector
+        \gdef\@codirector{#2}%
+        \gdef\@codirectorsex{}%
+        \gdef\@bibcodirector{}%
+    }{%
+        % Si se proporciona el argumento opcional, establece tanto el nombre como el sexo del codirector
+        \gdef\@codirector{#2}%
+        \gdef\@codirectorsex{#1}%
+        \gdef\@bibcodirector{#3}%
+    }%
+}
+\newcommand{\@codirector}{} % Inicializar la macro del nombre del codirector para que esté vacía
+\newcommand{\@codirectorsex}{} % Inicializar la macro codirector sex para que esté vacía
+\newcommand{\@bibcodirector}{} % Inicializar la macro nombre del babero codirector para que esté vacía
+
+
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -464,6 +490,13 @@
             \normalsize
             \textbf{\ifthenelse{\equal{\authorsex}{m}}{Autor}{Autora}}: \@author\\*[1em]
             \textbf{\ifthenelse{\equal{\directorsex}{m}}{Director}{Directora}}: \@director\\*[1em]
+            \ifthenelse{\equal{\@codirectorsex}{m}}{%
+                \textbf{Codirector}: \@codirector\\*[1em]
+            }{\ifthenelse{\equal{\@codirectorsex}{f}}{%
+                \textbf{Codirectora}: \@codirector\\*[1em]
+            }{%
+                % No hacer nada si el parámetro no es 'm' ni 'f
+            }}
             Madrid, \@date
         }
     \end{adjustwidth}
@@ -492,6 +525,13 @@
             {Director}%
             {Directora}%
         }: \@director
+        \ifthenelse{\equal{\@codirectorsex}{m}}{%
+                \\\textbf{Codirector}: \@codirector
+            }{\ifthenelse{\equal{\@codirectorsex}{f}}{%
+                \\\textbf{Codirectora}: \@codirector
+            }{%
+                % No hacer nada si el parámetro no es 'm' ni 'f
+            }}
     }
     
     \par{
@@ -506,7 +546,7 @@
         \texttt{%
             @mastersthesis\{citekey,\\
                 title   = \{\@title\},\\
-                author  = \{\@bibauthor~\textbackslash\& \@bibdirector \}\\
+                author  = \{\@bibauthor~\textbackslash\& \@bibdirector \ifx\@codirectorsex\@empty\else~\textbackslash\& \@bibcodirector \fi \},\\
                 school  = \{\schoolname\},\\
                 year    = \{\the\year\},\\
                 month   = \{\the\month\},\\

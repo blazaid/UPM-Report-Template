@@ -41,13 +41,20 @@ Los cinco siguientes comandos, como se ve en el listado~\ref{lst:starting-title-
 
 El único misterio es eso de las entradas bibliográficas para el autor y el director. No es más que los nombres que aparecen más adelante cuando se indica \enquote{cómo citar el proyecto}. El día que aprenda cómo hacerlo automáticamente, será una configuración que desaparezca\footnote{Bueno, y si tú, queridísimo lector o lectora sabes cómo hacerlo, hazme un \textit{pull request} al repositorio de la plantilla: \href{\templaterepository}{\templaterepository}.}.
 
+Para incluir un codirector o codirectora, en el caso de que el trabajo lo requiera, simplemente descomenta la línea que verás a continuación (listado \ref{lst:adding-codirector}).
+
+\lstinputlisting[language=tex,firstline=17,lastline=9,caption={Configurando codirector},label=lst:adding-codirector]{report.tex}
+
+El primer parámetro dentro de los corchetes \texttt{[f/m]} indica el género del codirector (\texttt{m} para masculino, \texttt{f} para femenino). A continuación, proporciona el nombre completo del codirector y el nombre para la referencia bibliográfica. Recuerda que esta configuración es opcional, si no se necesita un codirector, simplemente deja esta línea comentada. El documento generará automáticamente la portada y el contenido sin incluir la sección del codirector.
+
+
 Tras ello, empieza el primer contenido de verdad: \textbf{resumen} y \textbf{abstract}, cada uno con sus palabras clave asociadas. Ambos dos son obligatorios y se añaden con la macro \lstinline{\abstract}, donde se especificarán el idioma (\texttt{spanish} o \texttt{english}) y el contenido. De la misma manera, las palabras clave se añaden con la macro \lstinline{\keywords}. Ni que decir tiene que ambos deben tener el mismo contenido, uno en español y el otro en inglés. Y además es obligatorio (según la normativa de la ETSISI).
 
 Existe la opción de añadir agradecimientos a través de la macro \lstinline{\acknowledgements}. Es opcional, así que si no se pone no se renderiza en el documento final, pero es algo bonito y a las abuelas les encanta aparecer ahí. Y las abuelas son de lo más bonito que existe en este mundo, así que cuidadlas.
 
 Y ahora sí, se empieza con el grueso del documento. Tras incluir el glosario, del que se hablará en la sección~\ref{s:glosario} del~\ref{ch:componentes-de-la-plantilla}, se comenzarán a incluir uno tras otro todos los capítulos de los que se compone nuestra memoria, tal y como se muestra en el listado~\ref{lst:starting-include-chapters}.
 
-\lstinputlisting[language=tex,firstline=39,lastline=50,caption={Cómo se incluyen los capítulos y los apéndices},label={lst:starting-include-chapters}]{report.tex}
+\lstinputlisting[language=tex,firstline=41,lastline=52,caption={Cómo se incluyen los capítulos y los apéndices},label={lst:starting-include-chapters}]{report.tex}
 
 La macro \lstinline{\appendix} del medio indica a partir de qué punto se añaden los apéndices. No son obligatorios, ni mucho menos, pero en algunos \glspl{pfg} y \glspl{pfm} se suelen incluir para dar información adicional de contexto que no es el objetivo de la memoria, pero sí interesante para complementar. Por ejemplo, en un \gls{pfm} para el estudio del comportamiento de conductores al volante, uno de los apéndices podría ser cada uno de los formularios que se le ofrecieron para rellenar a cada uno de los conductores de dicho estudio.
 
