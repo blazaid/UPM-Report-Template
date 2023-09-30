@@ -41,9 +41,6 @@
 \DeclareStringOption{school}
 \DeclareStringOption{type}
 \DeclareStringOption{degree}
-\DeclareStringOption{authorsex}
-\DeclareStringOption{directorsex}
-\DeclareStringOption{codirectorsex}
 \ProcessKeyvalOptions*
 
 % Variables relacionadas con la escuela (arg. 'school')
@@ -51,6 +48,18 @@
 \newcommand{\schoolabbr}{}
 \newcommand{\schoollogo}{}
 \newcommand{\schooladdress}{}
+\ifthenelse{\equal{\@upm@school}{etsiaab}}{%
+    \renewcommand{\schoolname}{E.T.S. de Ingeniería Agronómica, Alimentaria y de Biosistemas}
+    \renewcommand{\schoolabbr}{ETSIAAB}
+    \renewcommand{\schoollogo}{upm-report/logos/logo-etsiaab.png}
+    \renewcommand{\schooladdress}{%
+        Campus Ciudad Universitaria\\
+        Av. Puerta de Hierro, nº 2 - 4\\
+        28040 Madrid, España
+    }
+    \definecolor{schoolcolor}{RGB}{99,178,76}
+    \definecolor{linkcolor}{RGB}{99,178,76}
+}{}
 \ifthenelse{\equal{\@upm@school}{etsidi}}{%
     \renewcommand{\schoolname}{E.T.S. de Ingeniería y Diseño Industrial}
     \renewcommand{\schoolabbr}{ETSIDI}
@@ -118,6 +127,27 @@
 % Variables relacionadas con el título de estudios (arg. 'degree')
 \newcommand{\degreecode}{}
 \newcommand{\degreename}{}
+%% ETSIAAB
+\ifthenelse{\equal{\@upm@degree}{20BT}}{
+    \renewcommand{\degreecode}{20BT}
+    \renewcommand{\degreename}{Grado en Biotecnología}
+}{}
+\ifthenelse{\equal{\@upm@degree}{20BI}}{
+    \renewcommand{\degreecode}{20BI}
+    \renewcommand{\degreename}{Grado en Ciencias Agrarias y Bioeconomía}
+}{}
+\ifthenelse{\equal{\@upm@degree}{20IG}}{
+    \renewcommand{\degreecode}{20IG}
+    \renewcommand{\degreename}{Grado en Ingeniería Agrícola}
+}{}
+\ifthenelse{\equal{\@upm@degree}{02IA}}{
+    \renewcommand{\degreecode}{20IA}
+    \renewcommand{\degreename}{Grado en Ingeniería Agroambiental}
+}{}
+\ifthenelse{\equal{\@upm@degree}{20IA}}{
+    \renewcommand{\degreecode}{20IA}
+    \renewcommand{\degreename}{Grado en Ingeniería Alimentaria}
+}{}
 %% ETSIDI
 \ifthenelse{\equal{\@upm@degree}{56IE}}{
     \renewcommand{\degreecode}{56IE}
@@ -165,20 +195,32 @@
     \PackageError{upm-report}{Degree}{Falta el parámetro 'degree'}
 }{}
 
-% Variables relacionadas con el sexo del autor (arg. 'degree')
-\newcommand{\authorsex}{\@upm@authorsex}
-\ifthenelse{\not \( \equal{\authorsex}{m} \or \equal{\authorsex}{f} \)}{
-    \PackageError{upm-report}{Author sex}{Falta el parámetro 'authorsex'}
-}{}
-
-% Variables relacionadas con el sexo del director (arg. 'degree')
-\newcommand{\directorsex}{\@upm@directorsex}
-\ifthenelse{\not \( \equal{\directorsex}{m} \or \equal{\directorsex}{f} \)}{
-    \PackageError{upm-report}{Director sex}{Falta el parámetro 'directorsex'}
-}{}
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Autores, directores y demás
+%
+\renewcommand{\and}{y\space}
+%\def\authors{}
+%\newcounter{author}
+%\makeatletter
+%\renewcommand{\author}[1]{\@breakauthor#1\@breakauthor}
+%\def\@breakauthor#1 #2\@breakauthor{%
+%  \gdef\@author{#1 \textsc{#2}}%
+%}
+%\makeatother
+%\renewcommand{\author}[2][]{%
+%    \ifthenelse{\equal{#1}{}}{%
+%        % Si el argumento opcional está vacío, establece sólo el nombre
+%        % del autor con el género por defecto (femenino)
+%        \gdef\@author{#2}%
+%    }{%
+%        % Si se proporciona el argumento opcional, establece tanto el
+%        % nombre como el sexo del codirector
+%    }
+%}
+%\def\@breakauthor#1 #2\@breakauthor{%
+%  \gdef\@author{#1 \textsc{#2}}%
+%}
+%\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables
@@ -190,27 +232,6 @@
 \newcommand{\@director}{\@latex@warning@no@line{No \noexpand\director given}}
 \newcommand{\bibdirector}[1]{\gdef\@bibdirector{#1}}%
 \newcommand{\@bibdirector}{\@latex@warning@no@line{No \noexpand\bibdirector given}}
-
-
-
-
-\newcommand{\codirector}[3][]{%
-    \ifthenelse{\equal{#1}{}}{%
-        % Si el argumento opcional está vacío, establece sólo el nombre del codirector
-        \gdef\@codirector{#2}%
-        \gdef\@codirectorsex{}%
-        \gdef\@bibcodirector{}%
-    }{%
-        % Si se proporciona el argumento opcional, establece tanto el nombre como el sexo del codirector
-        \gdef\@codirector{#2}%
-        \gdef\@codirectorsex{#1}%
-        \gdef\@bibcodirector{#3}%
-    }%
-}
-\newcommand{\@codirector}{} % Inicializar la macro del nombre del codirector para que esté vacía
-\newcommand{\@codirectorsex}{} % Inicializar la macro codirector sex para que esté vacía
-\newcommand{\@bibcodirector}{} % Inicializar la macro nombre del babero codirector para que esté vacía
-
 
 \makeatother
 
@@ -486,17 +507,10 @@
         \vfill
         {\fontsize{38}{38}\selectfont\@title}\\*[0.3cm]
         \vfill
-        \parbox[b]{\linewidth}{%
+        \parbox[b]{\linewidth}{
             \normalsize
-            \textbf{\ifthenelse{\equal{\authorsex}{m}}{Autor}{Autora}}: \@author\\*[1em]
-            \textbf{\ifthenelse{\equal{\directorsex}{m}}{Director}{Directora}}: \@director\\*[1em]
-            \ifthenelse{\equal{\@codirectorsex}{m}}{%
-                \textbf{Codirector}: \@codirector\\*[1em]
-            }{\ifthenelse{\equal{\@codirectorsex}{f}}{%
-                \textbf{Codirectora}: \@codirector\\*[1em]
-            }{%
-                % No hacer nada si el parámetro no es 'm' ni 'f
-            }}
+            \textbf{Desarrollado por}: \@author \\*[1em]
+            \textbf{Dirigido por}: \@director \\*[1em]
             Madrid, \@date
         }
     \end{adjustwidth}
@@ -516,22 +530,9 @@
     ~\vfill
     \par{
         \textit{\@title}\\
+        \textbf{Desarrollado por}: \@author\\
+        \textbf{Dirigido por}: \@director\\
         \reporttype, \today\\
-        \textbf{\ifthenelse{\equal{\authorsex}{m}}%
-            {Autor}%
-            {Autora}%
-        }: \@author\\
-        \textbf{\ifthenelse{\equal{\directorsex}{m}}%
-            {Director}%
-            {Directora}%
-        }: \@director
-        \ifthenelse{\equal{\@codirectorsex}{m}}{%
-                \\\textbf{Codirector}: \@codirector
-            }{\ifthenelse{\equal{\@codirectorsex}{f}}{%
-                \\\textbf{Codirectora}: \@codirector
-            }{%
-                % No hacer nada si el parámetro no es 'm' ni 'f
-            }}
     }
     
     \par{
@@ -546,7 +547,7 @@
         \texttt{%
             @mastersthesis\{citekey,\\
                 title   = \{\@title\},\\
-                author  = \{\@bibauthor~\textbackslash\& \@bibdirector \ifx\@codirectorsex\@empty\else~\textbackslash\& \@bibcodirector \fi \},\\
+                author  = \{\@bibauthor~y~\@bibdirector\},\\
                 school  = \{\schoolname\},\\
                 year    = \{\the\year\},\\
                 month   = \{\the\month\},\\
