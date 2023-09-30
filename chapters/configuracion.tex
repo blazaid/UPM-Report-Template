@@ -24,36 +24,28 @@ En este punto es donde se configura gran parte de la plantilla. Los parámetros 
 \begin{itemize}
     \item \texttt{school}: La escuela a la que pertenece el estudiante. La idea de la plantilla es que se use a lo largo de todas las escuelas de la UPM, y que cada una de ellas tenga su propia configuración. La escuela determinará, entre otras cosas, direcciones y colores principales. Las opciones se describen en el~\autoref{ch:escuelas-y-titulos}.
     \item \texttt{type}: El tipo de memoria. Modifica algunos textos, incluida la portada. Puede tomar los valores \texttt{pfg} (\acrlong{pfg}) y \texttt{pfm}  (\acrlong{pfm}).
-    \item \texttt{degree}: El grado al que aspira el estudiante. De momento sólo están definidos los grados que se imparten en la ETSISI (también en el~\autoref{ch:escuelas-y-titulos}).
-    \item \texttt{authorsex}: Puede ser \texttt{m} (masculino) o \texttt{f} (femenino), y sirve para modificar algunos textos relacionados con el sexo del estudiante.
-    \item \texttt{directorsex}: Similar al parámetro \texttt{authorsex}, pero para el director del proyecto.
+    \item \texttt{degree}: El grado al que aspira el estudiante. Las escuelas y los grados soportados se encuentran en el~\autoref{ch:escuelas-y-titulos}.
 \end{itemize}
 
 Tras esta configuración, se incluye el fichero de referencias bibliográficas (listado~\ref{lst:starting-references}):
 
 \lstinputlisting[language=tex,firstline=9,lastline=9,caption=Inclusión del fichero de referencias bibliográficas \texttt{references.bib},label=lst:starting-references]{report.tex}
 
-El tema de las referencias bibliográficas se explica en el~\autoref{s:referencias-bibliograficas} del~\autoref{ch:componentes-de-la-plantilla}. En principio no habría que tocar nada (bueno sí, añadir las fuentes y referenciarlas), pero si las referencias se tienen en otro fichero, bastaría con cambiar el nombre al de dicho fichero.
+El tema de las referencias bibliográficas se explica en la~\autoref{s:referencias-bibliograficas}. En principio no habría que tocar nada (bueno sí, añadir las fuentes y referenciarlas), pero si las referencias se tienen en otro fichero, bastaría con cambiar el nombre al de dicho fichero.
 
-Los cinco siguientes comandos, como se ve en el listado~\ref{lst:starting-title-author-and-director}, indican el título del proyecto, el nombre del autor y su entrada en la bibliografía, y el nombre del director y su entrada en la bibliografía.
+Los tres comandos siguientes (listado~\ref{lst:starting-title-author-and-director}) indican el título del proyecto, el nombre del autor y su entrada en la bibliografía, y el nombre del director y su entrada en la bibliografía.
 
-\lstinputlisting[language=tex,firstline=11,lastline=15,caption={Configurando autor, título del proyecto y director},label={lst:starting-title-author-and-director}]{report.tex}
+\lstinputlisting[language=tex,firstline=11,lastline=13,caption={Configurando autor, título del proyecto y director},label={lst:starting-title-author-and-director}]{report.tex}
 
-El único misterio es eso de las entradas bibliográficas para el autor y el director. No es más que los nombres que aparecen más adelante cuando se indica \enquote{cómo citar el proyecto}. El día que aprenda cómo hacerlo automáticamente, será una configuración que desaparezca\footnote{Bueno, y si tú, queridísimo lector o lectora sabes cómo hacerlo, hazme un \textit{pull request} al repositorio de la plantilla: \href{\templaterepository}{\templaterepository}.}.
+Eso de las entradas bibliográficas para el autor y el director no son más que los nombres que aparecen en \enquote{cómo citar el proyecto}. El día que aprenda cómo hacerlo automáticamente, estas líneas desaparecerán\footnote{Bueno, y si tú, queridísimo lector o lectora sabes cómo hacerlo, haz un \textit{pull request} al repositorio de la plantilla: \href{\templaterepository}{\templaterepository}.}.
 
-Para incluir un codirector o codirectora, en el caso de que el trabajo lo requiera, simplemente descomenta la línea que verás a continuación (listado \ref{lst:adding-codirector}).
+Tras ello, empieza el primer contenido de verdad: \textbf{resumen} y \textbf{abstract}, cada uno con sus palabras clave asociadas. Ambos dos son obligatorios y se añaden con la macro \lstinline{\abstract}, donde se especificarán el idioma (\texttt{spanish} o \texttt{english}) y el contenido. De la misma manera, las palabras clave se añaden con la macro \lstinline{\keywords}. Son obligatorios, así que no te los saltes.
 
-\lstinputlisting[language=tex,firstline=17,lastline=9,caption={Configurando codirector},label=lst:adding-codirector]{report.tex}
+Existe la opción de añadir agradecimientos con \lstinline{\acknowledgements}. Si no se pone no se renderiza en el documento final, pero es algo bonito y a las abuelas les encanta aparecer ahí. Y las abuelas son de lo más bonito que existe en este mundo, así que cuidadlas.
 
-El primer parámetro dentro de los corchetes \texttt{[f/m]} indica el género del codirector (\texttt{m} para masculino, \texttt{f} para femenino). A continuación, proporciona el nombre completo del codirector y el nombre para la referencia bibliográfica. Recuerda que esta configuración es opcional, si no se necesita un codirector, simplemente deja esta línea comentada. El documento generará automáticamente la portada y el contenido sin incluir la sección del codirector.
+Y ahora sí, empezamos con el documento. Tras el glosario (\autoref{s:glosario}), se comenzarán a incluir uno tras otro todos los capítulos de los que se compone nuestra memoria, tal y como se muestra en el listado~\ref{lst:starting-include-chapters}.
 
-Tras ello, empieza el primer contenido de verdad: \textbf{resumen} y \textbf{abstract}, cada uno con sus palabras clave asociadas. Ambos dos son obligatorios y se añaden con la macro \lstinline{\abstract}, donde se especificarán el idioma (\texttt{spanish} o \texttt{english}) y el contenido. De la misma manera, las palabras clave se añaden con la macro \lstinline{\keywords}. Ni que decir tiene que ambos deben tener el mismo contenido, uno en español y el otro en inglés. Y además es obligatorio (según la normativa de la ETSISI).
-
-Existe la opción de añadir agradecimientos a través de la macro \lstinline{\acknowledgements}. Es opcional, así que si no se pone no se renderiza en el documento final, pero es algo bonito y a las abuelas les encanta aparecer ahí. Y las abuelas son de lo más bonito que existe en este mundo, así que cuidadlas.
-
-Y ahora sí, se empieza con el grueso del documento. Tras incluir el glosario, del que se hablará en la sección~\ref{s:glosario} del~\ref{ch:componentes-de-la-plantilla}, se comenzarán a incluir uno tras otro todos los capítulos de los que se compone nuestra memoria, tal y como se muestra en el listado~\ref{lst:starting-include-chapters}.
-
-\lstinputlisting[language=tex,firstline=41,lastline=52,caption={Cómo se incluyen los capítulos y los apéndices},label={lst:starting-include-chapters}]{report.tex}
+\lstinputlisting[language=tex,firstline=37,lastline=40,caption={Cómo incluir capítulos y apéndices},label={lst:starting-include-chapters}]{report.tex}
 
 La macro \lstinline{\appendix} del medio indica a partir de qué punto se añaden los apéndices. No son obligatorios, ni mucho menos, pero en algunos \glspl{pfg} y \glspl{pfm} se suelen incluir para dar información adicional de contexto que no es el objetivo de la memoria, pero sí interesante para complementar. Por ejemplo, en un \gls{pfm} para el estudio del comportamiento de conductores al volante, uno de los apéndices podría ser cada uno de los formularios que se le ofrecieron para rellenar a cada uno de los conductores de dicho estudio.
 
