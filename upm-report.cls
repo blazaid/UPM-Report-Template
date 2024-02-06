@@ -440,12 +440,13 @@
 % Listados condicionales
 %
 \RequirePackage[
-    figure,table,lstlisting
+    figure,table,lstlisting,equation
     ]{totalcount}  % Contar las veces que aparecen entradas en listados
 
 \newcommand\conditionalLoF{\iftotalfigures\listoffigures\fi}
 \newcommand\conditionalLoT{\iftotaltables\listoftables\fi}
 \newcommand\conditionalLoL{\iftotallstlistings\lstlistoflistings\fi}
+\newcommand\conditionalLoE{\iftotalequations\listofmyequations\fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Licencia de la memoria
@@ -658,7 +659,7 @@
         \conditionalLoF
         \conditionalLoT
         \conditionalLoL
-        \listofmyequations
+        \conditionalLoE
     \endgroup
 
     \mainmatter
