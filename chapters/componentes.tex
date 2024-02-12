@@ -42,7 +42,7 @@ Cuando en lugar de poner una ecuación dentro de un párrafo existente la querem
 
 Sin embargo, en el caso de que quisiésemos más de una ecuación en el mismo bloque haríamos uso del carácter \& para indicar en qué punto se alinean las ecuaciones; por ejemplo:
 
-\begin{minipage}[t]{.5\textwidth}
+\begin{minipage}[c]{.5\textwidth}
 \begin{lstlisting}[language=tex]
 \begin{align}
     u  &= \arctan x \\ 
@@ -50,27 +50,44 @@ Sin embargo, en el caso de que quisiésemos más de una ecuación en el mismo bl
 \end{align}
 \end{lstlisting}
 \end{minipage}%
-\begin{minipage}[h]{.5\textwidth}
+\begin{minipage}[c]{.5\textwidth}
 \begin{align}
     u  &= \arctan x \\ 
     du &= \frac{1}{1 + x^2}dx
 \end{align}
 \end{minipage}
 
-Por último, si no tenemos por qué referenciarlas en el texto, podemos hacer uso de los entornos \texttt{equation*} y \texttt{align*}
+Por último, si no tenemos por qué referenciarlas en el texto, podemos hacer uso de los entornos \texttt{equation*} y \texttt{align*}.
 
 \begin{minipage}[c]{.5\textwidth}
 \begin{lstlisting}[language=tex]
 \begin{equation*}
-	\int_a^b f'(x) \, dx=f(b)-f(a)
+    \int_a^b f'(x) \, dx=f(b)-f(a)
 \end{equation*}
 \end{lstlisting}
 \end{minipage}%
 \begin{minipage}[c]{.5\textwidth}
 \begin{equation*}
-	\int_a^b f'(x) \, dx=f(b)-f(a)
+    \int_a^b f'(x) \, dx=f(b)-f(a)
 \end{equation*}
 \end{minipage}
+
+En caso de querer generar un índice de ecuaciones del documento, de la misma manera que los listados de Figuras, Tablas y Listados. Para ello, debemos añadir a la lista de ecuaciones la ecuación definida con el comando \texttt{myequations}. Es importante destacar que para generar un listado de ecuaciones estas deben estar numeradas, es decir.
+
+\begin{minipage}[c]{.5\textwidth}
+\begin{lstlisting}[language=tex]
+\begin{equation}
+     \frac{x^2}{a^2} - \frac{y^2}{b^2} = 1
+\end{equation}
+\myequations{Ecuación canónica de la hipérbola}
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}[c]{.5\textwidth}
+\begin{equation}
+     \frac{x^2}{a^2} - \frac{y^2}{b^2} = 1
+\end{equation}
+\myequations{Ecuación canónica de la hipérbola}
+\end{minipage} 
 
 \section{Elementos flotantes}
 
@@ -172,6 +189,7 @@ Nos daría como resultado el siguiente bloque de código:
 \lstinputlisting[language=python, firstline=16, lastline=19, caption=Función para determinar cuando una palabra \texttt{w1} es anagrama de otra palabra \texttt{w2}]{sources/adding-blocks.tex}
 
 \subsection{Figuras}
+\label{ch:figuras}
 
 El código siguiente (listado~\ref{lst:figure-basic-insert}) renderizará una imagen.
 

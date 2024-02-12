@@ -24,6 +24,7 @@
 \RequirePackage{ifthen}     % Para poder usar condicionales en la clase
 \RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
 \RequirePackage{xcolor}     % Mejoras sobre el paquete color
+\RequirePackage{tocloft}  % Añadir indice de ecuaciones
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores constantes
@@ -439,12 +440,13 @@
 % Listados condicionales
 %
 \RequirePackage[
-    figure,table,lstlisting
+    figure,table,lstlisting,equation
     ]{totalcount}  % Contar las veces que aparecen entradas en listados
 
 \newcommand\conditionalLoF{\iftotalfigures\listoffigures\fi}
 \newcommand\conditionalLoT{\iftotaltables\listoftables\fi}
 \newcommand\conditionalLoL{\iftotallstlistings\lstlistoflistings\fi}
+\newcommand\conditionalLoE{\iftotalequations\listofmyequations\fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Licencia de la memoria
@@ -657,6 +659,7 @@
         \conditionalLoF
         \conditionalLoT
         \conditionalLoL
+        \conditionalLoE
     \endgroup
 
     \mainmatter
@@ -676,6 +679,14 @@
     %\printindex  TODO Hacer el índice (por supuesto opcional)
     \makebackcover
 }
+\makeatother
+
+%%gmedina solution
+\newcommand{\listequationsname}{Índice de ecuaciones}
+\newlistof{myequations}{equ}{\listequationsname}
+\newcommand{\myequations}[1]{%
+\addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}\par}
+\setlength{\cftmyequationsnumwidth}{2.5em}% Width of equation number in List of Equations
 \makeatother
 
 \endinput
