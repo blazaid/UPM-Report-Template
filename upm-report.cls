@@ -171,6 +171,7 @@
     \renewcommand{\degreename}{Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto}
 }{}
 %% ETSISI
+%% Grados
 \ifthenelse{\equal{\@upm@degree}{61CD}}{
     \renewcommand{\degreecode}{61CD}
     \renewcommand{\degreename}{Grado en Ciencia de Datos e Inteligencia Artificial}
@@ -189,9 +190,14 @@
 }{}
 \ifthenelse{\equal{\@upm@degree}{61TI}}{
     \renewcommand{\degreecode}{61TI}
-    \renewcommand{\degreename}{Grado en Tecnologías para la Sociedad de la Información
-    }
+    \renewcommand{\degreename}{Grado en Tecnologías para la Sociedad de la Información}
 }{}
+%% Másters
+\ifthenelse{\equal{\@upm@degree}{MAADM}}{
+    \renewcommand{\degreecode}{MAADM}
+    \renewcommand{\degreename}{Máster Universitario en Aprendizaje Automático y Datos Masivos}
+}{}
+
 \ifthenelse{\equal{\degreecode}{}}{
     \PackageError{upm-report}{Degree}{Falta el parámetro 'degree'}
 }{}
@@ -446,6 +452,11 @@
 \newcommand\conditionalLoF{\iftotalfigures\listoffigures\fi}
 \newcommand\conditionalLoT{\iftotaltables\listoftables\fi}
 \newcommand\conditionalLoL{\iftotallstlistings\lstlistoflistings\fi}
+% TODO Con las ecuaciones tenemos dos problemas. El primero, que las
+% ecuaciones sin caption no aparecen en el listado, y el segundo, que
+% las ecuaciones las cuenta independientemente de si aparecen en el
+% listado o no, por lo que si hay una equation*, aparece el epígrafe de
+% "Listado de ecuaciones" sin ninguna ecuación.
 \newcommand\conditionalLoE{\iftotalequations\listofmyequations\fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
