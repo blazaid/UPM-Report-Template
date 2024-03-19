@@ -518,7 +518,11 @@
         {\large \MakeUppercase{\reporttype}}\\*[1em]
         {\large \MakeUppercase{\textbf{\degreename}}}
         \vfill
-        {\fontsize{38}{38}\selectfont\@title}\\*[0.3cm]
+        \begin{hyphenrules}{nohyphenation}
+        \raggedright
+        \begin{sloppypar}\fontsize{38}{38}\selectfont\@title\end{sloppypar}
+        \end{hyphenrules}
+        \vfill
         \vfill
         \parbox[b]{\linewidth}{
             \normalsize
