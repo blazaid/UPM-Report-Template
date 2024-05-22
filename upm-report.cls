@@ -390,6 +390,7 @@
     unicode=true,
     colorlinks=true,
     linkcolor={linkcolor},
+    citecolor={linkcolor},
 }
 \makeatother
 
