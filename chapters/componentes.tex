@@ -429,7 +429,13 @@ En esta entrada, \texttt{@tipo} indica el tipo de elemento (p. ej. \texttt{@arti
 
 \subsection{¿De qué manera puedo citar las referencias?}
 
-TBD~\cite{mcculloch1943logical}
+Para citar una referencia en el cuerpo del texto, utilizamos la etiqueta \texttt{cite}, tal como se muestra en el listado~\ref{lst:bib-references}, con el identificador de la referencia bibliográfica previamente definida en el archivo \textit{references.bib}, como se ilustra en el listado~\ref{lst:base-bibref}.
+
+\begin{lstlisting}[language=tex, caption=Referenciando una entrada bibliográfica,label={lst:bib-references},]
+Según lo expuesto en \cite{mcculloch1943logical}, se observa que...
+\end{lstlisting}
+
+Esto generará una cita en el lugar correspondiente del texto y agregará automáticamente la referencia completa en la bibliografía.
 
 \section{Referencias cruzadas}
 
