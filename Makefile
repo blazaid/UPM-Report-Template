@@ -21,10 +21,10 @@ win:
 	If (-Not (Test-Path -Path $$BuildDir)) { New-Item -ItemType Directory -Path $$BuildDir }; \
 	Get-ChildItem -Path . -Exclude $$BuildDir, '.git' | Copy-Item -Destination $$BuildDir -Recurse -Force; \
 	Set-Location -Path $$BuildDir; \
-	xelatex \"$$MainTex.tex\"; \
+	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	biber $$MainTex; \
 	makeglossaries $$MainTex; \
-	xelatex \"$$MainTex.tex\"; \
+	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	}"
 	
 clean:
