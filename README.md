@@ -36,6 +36,12 @@ O también puedes usar el editor de textos Overleaf, online y que tiene disponib
 la plantilla directamente para su uso
 [en este enlace](https://es.overleaf.com/latex/templates/upm-report-template/sxtmzsytgthp)
 
+## Compilación Rápida
+
+Hay un documento Makefile en el repositorio que permite compilar facilmente el pdf.
+Para compilar haciendo su uso simplemente se ejecuta make con el target `unix` si se está usando
+un sistema operativo unix-like o `win` en caso de Windows.
+
 ## Contribución
 
 Si deseas contribuir a este proyecto, puedes realizar los siguientes pasos:
