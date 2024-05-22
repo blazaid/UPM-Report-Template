@@ -8,9 +8,15 @@ all:
 unix:
 	mkdir -p $(BUILD_DIR)
 	cp -rv $$(ls -A | grep -vwE "build|.git") build
+
+	# If your document contains references, or ToC, LoT, LoF material, at least three times. The reasoning is pretty simple:
+	# First pass creates the labels and ToC, LoT, LoF material. Second pass has everything, but due to changes in layout and
+	# the additional material that wasn't available during first pass, the page numbers might change.
+	# Third pass is the first one that might be correct, but there could still be some changes affecting cross-referencing,
+	# so you might need more than three.
+
 	-cd $(BUILD_DIR) && xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex
-	-cd $(BUILD_DIR) && biber $(MAIN_TEX)
-	-cd $(BUILD_DIR) && makeglossaries $(MAIN_TEX)
+	-cd $(BUILD_DIR) && xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex
 	cd $(BUILD_DIR) && xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex
 	
 win:
@@ -21,9 +27,15 @@ win:
 	If (-Not (Test-Path -Path $$BuildDir)) { New-Item -ItemType Directory -Path $$BuildDir }; \
 	Get-ChildItem -Path . -Exclude $$BuildDir, '.git' | Copy-Item -Destination $$BuildDir -Recurse -Force; \
 	Set-Location -Path $$BuildDir; \
+
+	# If your document contains references, or ToC, LoT, LoF material, at least three times. The reasoning is pretty simple:
+	# First pass creates the labels and ToC, LoT, LoF material. Second pass has everything, but due to changes in layout and
+	# the additional material that wasn't available during first pass, the page numbers might change.
+	# Third pass is the first one that might be correct, but there could still be some changes affecting cross-referencing,
+	# so you might need more than three.
+	
 	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
-	biber $$MainTex; \
-	makeglossaries $$MainTex; \
+	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	}"
 	
