@@ -24,7 +24,7 @@
 \RequirePackage{ifthen}     % Para poder usar condicionales en la clase
 \RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
 \RequirePackage{xcolor}     % Mejoras sobre el paquete color
-\RequirePackage{tocloft}  % Añadir indice de ecuaciones
+\RequirePackage{tocloft}    % Añadir indice de ecuaciones
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores constantes
