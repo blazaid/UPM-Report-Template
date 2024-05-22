@@ -8,10 +8,10 @@ all:
 unix:
 	mkdir -p $(BUILD_DIR)
 	cp -rv $$(ls -A | grep -vwE "build|.git") build
-	-cd $(BUILD_DIR) && xelatex $(MAIN_TEX).tex
+	-cd $(BUILD_DIR) && xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex
 	-cd $(BUILD_DIR) && biber $(MAIN_TEX)
 	-cd $(BUILD_DIR) && makeglossaries $(MAIN_TEX)
-	cd $(BUILD_DIR) && xelatex $(MAIN_TEX).tex
+	cd $(BUILD_DIR) && xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex
 	
 win:
 	@echo off
