@@ -30,7 +30,7 @@ win:
 	Set-Location -Path $$BuildDir; \
 	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	makeglossaries $(MAIN_TEX)
-	biber $(MAIN_TEX).tex
+	biber $(MAIN_TEX)
 	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
 	}
