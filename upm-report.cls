@@ -24,7 +24,7 @@
 \RequirePackage{ifthen}     % Para poder usar condicionales en la clase
 \RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
 \RequirePackage{xcolor}     % Mejoras sobre el paquete color
-\RequirePackage{tocloft}  % Añadir indice de ecuaciones
+\RequirePackage{tocloft}    % Añadir indice de ecuaciones
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores constantes
@@ -390,6 +390,7 @@
     unicode=true,
     colorlinks=true,
     linkcolor={linkcolor},
+    citecolor={linkcolor},
 }
 \makeatother
 
@@ -499,6 +500,7 @@
 \renewcommand\maketitle{{
     \sffamily
     \thispagestyle{empty}
+    \pagenumbering{gobble}
     % Barra lateral izquierda y logo fondo
     \AddToShipoutPicture*{%
         \AtPageLowerLeft{%
@@ -544,6 +546,7 @@
     \footnotesize
     \clearpage
     \thispagestyle{empty}
+    \pagenumbering{gobble}
     ~\vfill
     \par{
         \textit{\@title}\\
@@ -588,6 +591,7 @@
     \ifthenelse{\equal{\@acknowledgements}{}}{}{
         \clearpage
         \thispagestyle{empty}
+        \pagenumbering{gobble}
         \chapter*{Agradecimientos}
         \@acknowledgements
     }
@@ -610,6 +614,7 @@
 \newcommand\makeresumen{{
     \clearpage
     \thispagestyle{empty}
+    \pagenumbering{gobble}
     \chapter*{Resumen}
     \@abstractsp
 
@@ -619,6 +624,7 @@
 \newcommand\makeabstract{{
     \clearpage
     \thispagestyle{empty}
+    \pagenumbering{gobble}
     \chapter*{Abstract}
     \@abstracten
 
@@ -641,6 +647,7 @@
 \newcommand{\makebackcover}{
     \clearpage
     \thispagestyle{empty}
+    \pagenumbering{gobble}
     \pagecolor{schoolcolor}
     \AddToShipoutPicture*{%
         \put(0,0){%
