@@ -12,19 +12,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Paquetes globales
 %
-\RequirePackage[%
-    titletoc
-    ]{appendix}             % "Apéndice" antes del nombre del capítulo
-\RequirePackage{awesomebox} % Bloques de texto más molones
-\RequirePackage{changepage} % Para poder usar los adjustwidth
-\RequirePackage{csquotes}   % Facilitar el trabajo con citas
-\RequirePackage{eso-pic}    % Colores y fondos
-\RequirePackage{graphicx}   % Mejoras sobre el paquete graphics
-\RequirePackage{hologo}     % Para poner logos relacionados con LaTeX
-\RequirePackage{ifthen}     % Para poder usar condicionales en la clase
+\RequirePackage[titletoc]{appendix}  % Que aparezca "Apéndice"
+\RequirePackage{awesomebox}  % Bloques de texto más molones
+\RequirePackage{changepage}  % Para poder usar los adjustwidth
+\RequirePackage{csquotes}  % Facilitar el trabajo con citas
+\RequirePackage{eso-pic}  % Colores y fondos
+\RequirePackage{graphicx}  % Mejoras sobre el paquete graphics
+\RequirePackage{hologo}  % Para poner logos relacionados con LaTeX
+\RequirePackage{ifthen}  % Para poder usar condicionales en la clase
 \RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
-\RequirePackage{xcolor}     % Mejoras sobre el paquete color
-\RequirePackage{tocloft}    % Añadir indice de ecuaciones
+\RequirePackage{xcolor}  % Mejoras sobre el paquete color
+\RequirePackage{tocloft}  % Añadir indice de ecuaciones
+\RequirePackage{multicol}  % Para usar varias columnas
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores constantes
