@@ -23,17 +23,15 @@ unix:
 win:
 	@echo off
 	powershell -Command "& {\
-	$$BuildDir = '$(BUILD_DIR)'; \
-	$$MainTex = '$(MAIN_TEX)'; \
-	If (-Not (Test-Path -Path $$BuildDir)) { New-Item -ItemType Directory -Path $$BuildDir }; \
-	Get-ChildItem -Path . -Exclude $$BuildDir, '.git' | Copy-Item -Destination $$BuildDir -Recurse -Force; \
-	Set-Location -Path $$BuildDir; \
-	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
-	makeglossaries $(MAIN_TEX)
-	biber $(MAIN_TEX)
-	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
-	xelatex -interaction nonstopmode -file-line-error \"$$MainTex.tex\"; \
-	}
+	If (-Not (Test-Path -Path '$(BUILD_DIR)')) { New-Item -ItemType Directory -Path '$(BUILD_DIR)' }; \
+	Get-ChildItem -Path . -Exclude '$(BUILD_DIR)', '.git' | Copy-Item -Destination '$(BUILD_DIR)' -Recurse -Force; \
+	Set-Location -Path '$(BUILD_DIR)'; \
+	xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX); \
+	makeglossaries $(MAIN_TEX); \
+	biber $(MAIN_TEX); \
+	xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex; \
+	xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex; \
+	}"
 	
 clean:
 	$(info Ejecuta make con el target 'clean-unix' o 'clean-win' según tu sustema operativo.)
