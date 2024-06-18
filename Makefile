@@ -26,11 +26,11 @@ win:
 	If (-Not (Test-Path -Path '$(BUILD_DIR)')) { New-Item -ItemType Directory -Path '$(BUILD_DIR)' }; \
 	Get-ChildItem -Path . -Exclude '$(BUILD_DIR)', '.git' | Copy-Item -Destination '$(BUILD_DIR)' -Recurse -Force; \
 	Set-Location -Path '$(BUILD_DIR)'; \
-	xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX); \
-	makeglossaries $(MAIN_TEX); \
-	biber $(MAIN_TEX); \
-	xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex; \
-	xelatex -interaction nonstopmode -file-line-error $(MAIN_TEX).tex; \
+	xelatex -interaction nonstopmode -file-line-error '$(MAIN_TEX).tex'; \
+	makeglossaries '$(MAIN_TEX)'; \
+	biber '$(MAIN_TEX)'; \
+	xelatex -interaction nonstopmode -file-line-error '$(MAIN_TEX).tex'; \
+	xelatex -interaction nonstopmode -file-line-error '$(MAIN_TEX).tex'; \
 	}"
 	
 clean:
