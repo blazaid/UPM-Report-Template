@@ -196,6 +196,10 @@
     \renewcommand{\degreecode}{MAADM}
     \renewcommand{\degreename}{Máster Universitario en Aprendizaje Automático y Datos Masivos}
 }{}
+\ifthenelse{\equal{\@upm@degree}{MPBD}}{
+    \renewcommand{\degreecode}{MPBD}
+    \renewcommand{\degreename}{Máster en Proyectos Big Data}
+}{}
 
 \ifthenelse{\equal{\degreecode}{}}{
     \PackageError{upm-report}{Degree}{Falta el parámetro 'degree'}
