@@ -24,6 +24,7 @@
 \RequirePackage{xcolor}  % Mejoras sobre el paquete color
 \RequirePackage{tocloft}  % Añadir indice de ecuaciones
 \RequirePackage{multicol}  % Para usar varias columnas
+\RequirePackage{multirow}  % Para usar varias columnas
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores constantes
@@ -456,12 +457,6 @@
 \newcommand\conditionalLoF{\iftotalfigures\listoffigures\fi}
 \newcommand\conditionalLoT{\iftotaltables\listoftables\fi}
 \newcommand\conditionalLoL{\iftotallstlistings\lstlistoflistings\fi}
-% TODO Con las ecuaciones tenemos dos problemas. El primero, que las
-% ecuaciones sin caption no aparecen en el listado, y el segundo, que
-% las ecuaciones las cuenta independientemente de si aparecen en el
-% listado o no, por lo que si hay una equation*, aparece el epígrafe de
-% "Listado de ecuaciones" sin ninguna ecuación.
-\newcommand\conditionalLoE{\iftotalequations\listofmyequations\fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Licencia de la memoria
@@ -684,7 +679,6 @@
         \conditionalLoF
         \conditionalLoT
         \conditionalLoL
-        \conditionalLoE
     \endgroup
 
     \mainmatter
