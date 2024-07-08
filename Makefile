@@ -2,8 +2,19 @@ MAIN_TEX=report
 REF_BIB=references
 BUILD_DIR=build
 
+# Detect the operating system
+ifeq ($(OS),Windows_NT)
+    DETECTED_OS := win
+else
+    DETECTED_OS := unix
+endif
+
 all:
-	$(info Ejecuta make con el target 'unix' o 'win' según tu sistema operativo.)
+ifeq ($(DETECTED_OS),win)
+	$(MAKE) win
+else
+	$(MAKE) unix
+endif
 
 # If your document contains references, or ToC, LoT, LoF material, at least three times. The reasoning is pretty simple:
 # First pass creates the labels and ToC, LoT, LoF material. Second pass has everything, but due to changes in layout and
@@ -36,7 +47,11 @@ win:
 	}
 	
 clean:
-	$(info Ejecuta make con el target 'clean-unix' o 'clean-win' según tu sustema operativo.)
+ifeq ($(DETECTED_OS),win)
+	$(MAKE) clean-win
+else
+	$(MAKE) clean-unix
+endif
 	
 clean-unix:
 	rm -rf $(BUILD_DIR)
