@@ -22,9 +22,8 @@
 \RequirePackage{ifthen}  % Para poder usar condicionales en la clase
 \RequirePackage{pdflscape}  % Posibilidad de páginas en apaisado
 \RequirePackage{xcolor}  % Mejoras sobre el paquete color
-\RequirePackage{tocloft}  % Añadir indice de ecuaciones
-\RequirePackage{multicol}  % Para usar varias columnas
-\RequirePackage{multirow}  % Para usar varias columnas
+%\RequirePackage{algorithm}
+%\RequirePackage{algpseudocode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores constantes
@@ -39,17 +38,48 @@
 \SetupKeyvalOptions{family=@upm, prefix=@upm@}
 
 % Opciones de configuración de la clase
-\DeclareStringOption{school}
 \DeclareStringOption{type}
+\DeclareStringOption{school}
 \DeclareStringOption{degree}
 \ProcessKeyvalOptions*
 
-% Variables relacionadas con la escuela (arg. 'school')
-\newcommand{\schoolname}{}
-\newcommand{\schoolabbr}{}
-\newcommand{\schoollogo}{}
-\newcommand{\schooladdress}{}
+% Variables relacionadas con el tipo de memoria (arg. `type`)
+\newcommand{\reporttype}{}
+\newcommand{\reporttypeabbr}{}
+\ifthenelse{\equal{\@upm@type}{pfg}}{
+    \renewcommand{\reporttype}{Proyecto Fin de Grado}
+    \renewcommand{\reporttypeabbr}{PFG}
+}{
+\ifthenelse{\equal{\@upm@type}{tfg}}{
+    \renewcommand{\reporttype}{Trabajo Fin de Grado}
+    \renewcommand{\reporttypeabbr}{TFG}
+}{
+\ifthenelse{\equal{\@upm@type}{pfm}}{
+    \renewcommand{\reporttype}{Proyecto Fin de Máster}
+    \renewcommand{\reporttypeabbr}{PFM}
+}{
+\ifthenelse{\equal{\@upm@type}{tfm}}{
+    \renewcommand{\reporttype}{Trabajo Fin de Máster}
+    \renewcommand{\reporttypeabbr}{TFM}
+}{
+\ifthenelse{\equal{\@upm@type}{td}}{
+    \renewcommand{\reporttype}{Tesis Doctoral}
+    \renewcommand{\reporttypeabbr}{PhD}
+}{
+\ifthenelse{\equal{\reporttype}{}}{
+    \PackageError{upm-report}{Report type}{Falta el parámetro 'type'}
+}{}}}}}}
+
+
+% Variables relacionadas con la escuela (arg. `school`)
+\newcommand{\schoolname}{NO DEFINIDO}
+\newcommand{\schoolabbr}{NO DEFINIDO}
+\newcommand{\schoollogo}{NO DEFINIDO}
+\newcommand{\schooladdress}{NO DEFINIDO}
+\newcommand{\degreecode}{NO DEFINIDO}
+\newcommand{\degreename}{NO DEFINIDO}
 \ifthenelse{\equal{\@upm@school}{etsiaab}}{%
+    % Datos de la escuela
     \renewcommand{\schoolname}{E.T.S. de Ingeniería Agronómica, Alimentaria y de Biosistemas}
     \renewcommand{\schoolabbr}{ETSIAAB}
     \renewcommand{\schoollogo}{upm-report/logos/logo-etsiaab.png}
@@ -60,8 +90,9 @@
     }
     \definecolor{schoolcolor}{RGB}{99,178,76}
     \definecolor{linkcolor}{RGB}{99,178,76}
-}{}
+}{
 \ifthenelse{\equal{\@upm@school}{etsidi}}{%
+    % Datos de la escuela
     \renewcommand{\schoolname}{E.T.S. de Ingeniería y Diseño Industrial}
     \renewcommand{\schoolabbr}{ETSIDI}
     \renewcommand{\schoollogo}{upm-report/logos/logo-etsidi.png}
@@ -71,19 +102,10 @@
     }
     \definecolor{schoolcolor}{RGB}{223,30,64}
     \definecolor{linkcolor}{RGB}{223,30,64}
-}{}
-\ifthenelse{\equal{\@upm@school}{etsii}}{%
-    \renewcommand{\schoolname}{E.T.S. de Ingenieros Industriales}
-    \renewcommand{\schoolabbr}{ETSII}
-    \renewcommand{\schoollogo}{upm-report/logos/logo-etsii.png}
-    \renewcommand{\schooladdress}{%
-        c/ José Gutiérrez Abascal, 2\\
-        28006, Madrid, España
-    }
-    \definecolor{schoolcolor}{RGB}{0,177,230}
-    \definecolor{linkcolor}{RGB}{0,177,230}
-}{}
+}{
+%% ETSISI
 \ifthenelse{\equal{\@upm@school}{etsisi}}{%
+    % Datos de la escuela
     \renewcommand{\schoolname}{E.T.S. de Ingeniería de Sistemas Informáticos}
     \renewcommand{\schoolabbr}{ETSISI}
     \renewcommand{\schoollogo}{upm-report/logos/logo-etsisi.png}
@@ -91,147 +113,95 @@
         Campus Sur UPM, Carretera de Valencia (A-3), km. 7\\
         28031, Madrid, España
     }
-    \definecolor{schoolcolor}{RGB}{31,130,192}
-    \definecolor{linkcolor}{RGB}{31,130,192}
-}{}
+    \definecolor{schoolcolor}{RGB}{0,114,206}
+    \definecolor{linkcolor}{RGB}{0,114,206}
+}{
 \ifthenelse{\equal{\schoolname}{}}{
     \PackageError{upm-report}{School}{Falta el parámetro 'school'}
-}{}
+}{}}}}
 
-% Variables relacionadas con el tipo de memoria (arg. 'type')
-\newcommand{\reporttype}{}
-\newcommand{\reporttypeabbr}{}
-\ifthenelse{\equal{\@upm@type}{pfg}}{
-    \renewcommand{\reporttype}{Proyecto Fin de Grado}
-    \renewcommand{\reporttypeabbr}{PFG}
-}{}
-\ifthenelse{\equal{\@upm@type}{tfg}}{
-    \renewcommand{\reporttype}{Trabajo Fin de Grado}
-    \renewcommand{\reporttypeabbr}{TFG}
-}{}
-\ifthenelse{\equal{\@upm@type}{pfm}}{
-    \renewcommand{\reporttype}{Proyecto Fin de Máster}
-    \renewcommand{\reporttypeabbr}{PFM}
-}{}
-\ifthenelse{\equal{\@upm@type}{tfm}}{
-    \renewcommand{\reporttype}{Trabajo Fin de Máster}
-    \renewcommand{\reporttypeabbr}{TFM}
-}{}
-\ifthenelse{\equal{\@upm@type}{td}}{
-    \renewcommand{\reporttype}{Tesis Doctoral}
-    \renewcommand{\reporttypeabbr}{PhD}
-}{}
-\ifthenelse{\equal{\reporttype}{}}{
-    \PackageError{upm-report}{Report type}{Falta el parámetro 'type'}
-}{}
 
-% Variables relacionadas con el título de estudios (arg. 'degree')
-\newcommand{\degreecode}{}
-\newcommand{\degreename}{}
-%% ETSIAAB
+% Variables relacionadas con la titulación (arg. `degree`)
+
+%% ETSAAB
 \ifthenelse{\equal{\@upm@degree}{20BT}}{
     \renewcommand{\degreecode}{20BT}
     \renewcommand{\degreename}{Grado en Biotecnología}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{20BI}}{
     \renewcommand{\degreecode}{20BI}
     \renewcommand{\degreename}{Grado en Ciencias Agrarias y Bioeconomía}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{20IG}}{
     \renewcommand{\degreecode}{20IG}
     \renewcommand{\degreename}{Grado en Ingeniería Agrícola}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{02IA}}{
     \renewcommand{\degreecode}{20IA}
     \renewcommand{\degreename}{Grado en Ingeniería Agroambiental}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{20IA}}{
     \renewcommand{\degreecode}{20IA}
     \renewcommand{\degreename}{Grado en Ingeniería Alimentaria}
-}{}
+}{
 %% ETSIDI
 \ifthenelse{\equal{\@upm@degree}{56IE}}{
     \renewcommand{\degreecode}{56IE}
     \renewcommand{\degreename}{Grado en Ingeniería Eléctrica}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{56IA}}{
     \renewcommand{\degreecode}{56IA}
     \renewcommand{\degreename}{Grado en Ingeniería Electrónica Industrial y Automática}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{56IM}}{
     \renewcommand{\degreecode}{56IM}
     \renewcommand{\degreename}{Grado en Ingeniería Mecánica}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{56IQ}}{
     \renewcommand{\degreecode}{56IQ}
     \renewcommand{\degreename}{Grado en Ingeniería Química}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{56DD}}{
     \renewcommand{\degreecode}{56DD}
     \renewcommand{\degreename}{Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto}
-}{}
+}{
 %% ETSISI
-%% Grados
 \ifthenelse{\equal{\@upm@degree}{61CD}}{
     \renewcommand{\degreecode}{61CD}
     \renewcommand{\degreename}{Grado en Ciencia de Datos e Inteligencia Artificial}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{61CI}}{
     \renewcommand{\degreecode}{61CI}
     \renewcommand{\degreename}{Grado en Ingeniería de Computadores}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{61IW}}{
     \renewcommand{\degreecode}{61IW}
     \renewcommand{\degreename}{Grado en Ingeniería del Software}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{61SI}}{
     \renewcommand{\degreecode}{61SI}
     \renewcommand{\degreename}{Grado en Sistemas de Información}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{61TI}}{
     \renewcommand{\degreecode}{61TI}
     \renewcommand{\degreename}{Grado en Tecnologías para la Sociedad de la Información}
-}{}
-%% Másters
+}{
 \ifthenelse{\equal{\@upm@degree}{MAADM}}{
     \renewcommand{\degreecode}{MAADM}
     \renewcommand{\degreename}{Máster Universitario en Aprendizaje Automático y Datos Masivos}
-}{}
+}{
 \ifthenelse{\equal{\@upm@degree}{MPBD}}{
     \renewcommand{\degreecode}{MPBD}
     \renewcommand{\degreename}{Máster en Proyectos Big Data}
-}{}
-
+}{
 \ifthenelse{\equal{\degreecode}{}}{
     \PackageError{upm-report}{Degree}{Falta el parámetro 'degree'}
-}{}
+}{}}}}}}}}}}}}}}}}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Autores, directores y demás
 %
 \renewcommand{\and}{y\space}
-%\def\authors{}
-%\newcounter{author}
-%\makeatletter
-%\renewcommand{\author}[1]{\@breakauthor#1\@breakauthor}
-%\def\@breakauthor#1 #2\@breakauthor{%
-%  \gdef\@author{#1 \textsc{#2}}%
-%}
-%\makeatother
-%\renewcommand{\author}[2][]{%
-%    \ifthenelse{\equal{#1}{}}{%
-%        % Si el argumento opcional está vacío, establece sólo el nombre
-%        % del autor con el género por defecto (femenino)
-%        \gdef\@author{#2}%
-%    }{%
-%        % Si se proporciona el argumento opcional, establece tanto el
-%        % nombre como el sexo del codirector
-%    }
-%}
-%\def\@breakauthor#1 #2\@breakauthor{%
-%  \gdef\@author{#1 \textsc{#2}}%
-%}
-%\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables
@@ -249,7 +219,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Idioma
 %
-% TODO Convertir el lenguaje en una opción del paquete
 \RequirePackage[spanish,es-tabla,es-ucroman]{babel}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -266,7 +235,7 @@
 % Cabeceras y pies de página
 %
 \RequirePackage{fancyhdr}
-\setlength{\headheight}{15.1pt}
+\setlength{\headheight}{15.8pt}
 \pagestyle{fancy}
 
 % Estilos globales
@@ -288,10 +257,10 @@
 \RequirePackage{titlesec}
 
 \titleformat{\chapter}%
-    {\fontsize{38}{38}}%
-    {\sffamily\fontsize{38}{38}\color{schoolcolor}\thechapter.}%
+    {\fontsize{30}{30}}%
+    {\sffamily\fontsize{30}{30}\color{schoolcolor}\thechapter.}%
     {0.6em}%
-    {\sffamily\fontsize{38}{38}\raggedleft\hspace*{\fill}}
+    {\sffamily\fontsize{30}{30}\raggedleft\hspace*{\fill}}
     [\hrule]
 \titlespacing*{\chapter}{0pt}{0pt}{25pt}
 
@@ -315,28 +284,29 @@
 \RequirePackage{microtype} % Mejoras tipográficas generales
 % TODO Cambiar los tipos de letra según la guía de estilos de la escuela
 \setmainfont[
-    Path=upm-report/fonts/Montserrat/,
+    Path=upm-report/fonts/Lora/,
     Extension=.ttf,
     UprightFont=*-Regular,
     BoldFont=*-SemiBold,
     ItalicFont=*-Italic,
     BoldItalicFont=*-SemiBoldItalic,
-]{Montserrat}
+]{Lora}
 
 \setsansfont[
-    Path=upm-report/fonts/Barlow Condensed/,
-    Extension=.ttf,
-    UprightFont=*-Medium,
-    BoldFont=*-Bold,
-    ItalicFont=*-MediumItalic,
-    BoldItalicFont=*-BoldItalic,
-]{BarlowCondensed}
+    Path=upm-report/fonts/Helvetica/,
+    Extension=.otf,
+    UprightFont=*-Roman,
+    BoldFont=*-Medium,
+    ItalicFont=*-LightItalic,
+    BoldItalicFont=*-MediumItalic,
+]{HelveticaNeue}
 
 \setmonofont[
     Path=upm-report/fonts/Fira Code/,
     Extension=.ttf,
     UprightFont=*-regular,
     BoldFont=*-bold,
+    Scale=0.87,
 ]{firacode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -393,8 +363,10 @@
     plainpages=false,
     unicode=true,
     colorlinks=true,
-    linkcolor={linkcolor},
+    anchorcolor={linkcolor},
     citecolor={linkcolor},
+    linkcolor={linkcolor},
+    urlcolor={linkcolor},
 }
 \makeatother
 
@@ -489,7 +461,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Referencias y bibliografía
 %
-\RequirePackage[backend=biber,style=ieee]{biblatex}
+\RequirePackage[backend=biber,style=apa]{biblatex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Portada
@@ -498,7 +470,6 @@
 \renewcommand\maketitle{{
     \sffamily
     \thispagestyle{empty}
-    \pagenumbering{gobble}
     % Barra lateral izquierda y logo fondo
     \AddToShipoutPicture*{%
         \AtPageLowerLeft{%
@@ -512,22 +483,21 @@
             }%
         }
     }
-    \begin{adjustwidth}{1.5cm}{}
-        {\large \MakeUppercase{\universityname}}\\*[1em]
-        {\large \MakeUppercase{\textbf{\schoolname}}}\\*[1em]
-        {\large \MakeUppercase{\reporttype}}\\*[1em]
-        {\large \MakeUppercase{\textbf{\degreename}}}
+    \begin{adjustwidth}{0.5cm}{}
+        {\normalsize \MakeUppercase{\universityname}}\\*[0.5em]
+        {\normalsize \MakeUppercase{\textbf{\schoolname}}}\\*[0.5em]
+        {\normalsize \MakeUppercase{\reporttype}}\\*[0.5em]
+        {\normalsize \MakeUppercase{\textbf{\degreename}}}
         \vfill
         \begin{hyphenrules}{nohyphenation}
         \raggedright
-        \begin{sloppypar}\fontsize{38}{38}\selectfont\@title\end{sloppypar}
+        \begin{sloppypar}\fontsize{34}{34}\selectfont\bfseries\@title\end{sloppypar}
         \end{hyphenrules}
-        \vfill
         \vfill
         \parbox[b]{\linewidth}{
             \normalsize
-            \textbf{Desarrollado por}: \@author \\*[1em]
-            \textbf{Dirigido por}: \@director \\*[1em]
+            \textbf{Desarrollado por}: \@author \\*[0.5em]
+            \textbf{Dirigido por}: \@director \\*[0.5em]
             Madrid, \@date
         }
     \end{adjustwidth}
@@ -544,7 +514,6 @@
     \footnotesize
     \clearpage
     \thispagestyle{empty}
-    \pagenumbering{gobble}
     ~\vfill
     \par{
         \textit{\@title}\\
@@ -589,7 +558,6 @@
     \ifthenelse{\equal{\@acknowledgements}{}}{}{
         \clearpage
         \thispagestyle{empty}
-        \pagenumbering{gobble}
         \chapter*{Agradecimientos}
         \@acknowledgements
     }
@@ -612,7 +580,6 @@
 \newcommand\makeresumen{{
     \clearpage
     \thispagestyle{empty}
-    \pagenumbering{gobble}
     \chapter*{Resumen}
     \@abstractsp
 
@@ -622,7 +589,6 @@
 \newcommand\makeabstract{{
     \clearpage
     \thispagestyle{empty}
-    \pagenumbering{gobble}
     \chapter*{Abstract}
     \@abstracten
 
@@ -645,7 +611,6 @@
 \newcommand{\makebackcover}{
     \clearpage
     \thispagestyle{empty}
-    \pagenumbering{gobble}
     \pagecolor{schoolcolor}
     \AddToShipoutPicture*{%
         \put(0,0){%
@@ -692,6 +657,7 @@
 \AtEndDocument{
     \backmatter
 
+    \renewcommand\bibname{Referencias}
     \printbibliography
     \chapter*{Índice de términos}
     \printglossaries
@@ -700,12 +666,9 @@
 }
 \makeatother
 
-%%gmedina solution
-\newcommand{\listequationsname}{Índice de ecuaciones}
-\newlistof{myequations}{equ}{\listequationsname}
-\newcommand{\myequations}[1]{%
-\addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}\par}
-\setlength{\cftmyequationsnumwidth}{2.5em}% Width of equation number in List of Equations
-\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Añadimos el fichero con las entradas de las referencias bibliográficas
+%
+\addbibresource{references.bib}
 
 \endinput
