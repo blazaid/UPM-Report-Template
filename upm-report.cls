@@ -75,6 +75,7 @@
 \newcommand{\schoolname}{NO DEFINIDO}
 \newcommand{\schoolabbr}{NO DEFINIDO}
 \newcommand{\schoollogo}{NO DEFINIDO}
+\newcommand{\schoollogoblackbackground}{NO DEFINIDO}
 \newcommand{\schooladdress}{NO DEFINIDO}
 \newcommand{\degreecode}{NO DEFINIDO}
 \newcommand{\degreename}{NO DEFINIDO}
@@ -82,7 +83,8 @@
     % Datos de la escuela
     \renewcommand{\schoolname}{E.T.S. de Ingeniería Agronómica, Alimentaria y de Biosistemas}
     \renewcommand{\schoolabbr}{ETSIAAB}
-    \renewcommand{\schoollogo}{upm-report/logos/logo-etsiaab.png}
+    \renewcommand{\schoollogo}{upm-report/images/etsiaab-logotipo.png}
+    \renewcommand{\schoollogoblackbackground}{upm-report/images/etsiaab-logotipo.png}
     \renewcommand{\schooladdress}{%
         Campus Ciudad Universitaria\\
         Av. Puerta de Hierro, nº 2 - 4\\
@@ -95,7 +97,8 @@
     % Datos de la escuela
     \renewcommand{\schoolname}{E.T.S. de Ingeniería y Diseño Industrial}
     \renewcommand{\schoolabbr}{ETSIDI}
-    \renewcommand{\schoollogo}{upm-report/logos/logo-etsidi.png}
+    \renewcommand{\schoollogo}{upm-report/images/etsidi-logotipo.png}
+    \renewcommand{\schoollogoblackbackground}{upm-report/images/etsidi-logotipo-fondonegro.pdf}
     \renewcommand{\schooladdress}{%
         c/ Ronda de Valencia, 3\\
         28012, Madrid, España
@@ -108,7 +111,8 @@
     % Datos de la escuela
     \renewcommand{\schoolname}{E.T.S. de Ingeniería de Sistemas Informáticos}
     \renewcommand{\schoolabbr}{ETSISI}
-    \renewcommand{\schoollogo}{upm-report/logos/logo-etsisi.png}
+    \renewcommand{\schoollogo}{upm-report/images/etsisi-isotipo.pdf}
+    \renewcommand{\schoollogoblackbackground}{upm-report/images/etsisi-isotipo-white.pdf}
     \renewcommand{\schooladdress}{%
         Campus Sur UPM, Carretera de Valencia (A-3), km. 7\\
         28031, Madrid, España
@@ -474,7 +478,7 @@
     \AddToShipoutPicture*{%
         \AtPageLowerLeft{%
             \makebox[1\paperwidth][r]{%
-                \includegraphics[width=0.9\paperwidth]{upm-report/logos/logo-upm}
+                \includegraphics[width=0.9\paperwidth]{upm-report/images/upm-logotipo}
             }%
         }
         \put(0,0){%
@@ -532,13 +536,14 @@
         Si deseas citar este trabajo, la entrada completa en \hologo{BibTeX} es la siguiente:
 
         \texttt{%
-            @mastersthesis\{citekey,\\
-                title   = \{\@title\},\\
-                author  = \{\@bibauthor~y~\@bibdirector\},\\
-                school  = \{\schoolname\},\\
-                year    = \{\the\year\},\\
-                month   = \{\the\month\},\\
-                type    = \{\reporttype\}\\
+            @mastersthesis\{citekey,\\%
+            \hspace*{2em}title   = \{\@title\},\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \hspace*{2em}author  = \{\@bibauthor~y~\@bibdirector\},\\
+            \hspace*{2em}school  = \{\schoolname\},\\
+            \hspace*{2em}year    = \{\the\year\},\\
+            \hspace*{2em}month   = \{\the\month\},\\
+            \hspace*{2em}type    = \{\reporttype\}\\
             \}
         }
     }
@@ -615,13 +620,13 @@
     \AddToShipoutPicture*{%
         \put(0,0){%
             \colorbox{black}{%
-                \parbox[b][12cm]{\paperwidth}{\vfill\hfill}
+                \parbox[b][.5\paperheight]{\paperwidth}{\vfill\hfill}
             }%
         }
     }
     \vspace*{\fill}
     \begin{center}
-        \includegraphics[width=6cm]{\schoollogo}
+        \includegraphics[width=.35\paperheight]{\schoollogoblackbackground}
     \end{center}
 }
 \makeatother
