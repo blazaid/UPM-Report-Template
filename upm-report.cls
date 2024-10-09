@@ -287,31 +287,9 @@
 \RequirePackage{fontspec}  % Para importar fuentes externas
 \RequirePackage{microtype} % Mejoras tipográficas generales
 % TODO Cambiar los tipos de letra según la guía de estilos de la escuela
-\setmainfont[
-    Path=upm-report/fonts/Lora/,
-    Extension=.ttf,
-    UprightFont=*-Regular,
-    BoldFont=*-SemiBold,
-    ItalicFont=*-Italic,
-    BoldItalicFont=*-SemiBoldItalic,
-]{Lora}
-
-\setsansfont[
-    Path=upm-report/fonts/Helvetica/,
-    Extension=.otf,
-    UprightFont=*-Roman,
-    BoldFont=*-Medium,
-    ItalicFont=*-LightItalic,
-    BoldItalicFont=*-MediumItalic,
-]{HelveticaNeue}
-
-\setmonofont[
-    Path=upm-report/fonts/Fira Code/,
-    Extension=.ttf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    Scale=0.87,
-]{firacode}
+\setmainfont{TeX Gyre PagellaX}
+\setsansfont{Gillius ADF No2}
+\setmonofont{Inconsolatazi4}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fórmulas matemáticas
@@ -470,7 +448,61 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Portada
 %
+% No hay una genérica porque cada escuela/titulación/faraón quiere la
+% suya propia, así que no queda otra que ir separando por requisitos. En
+% el `else` principal está la genérica. A lo mejor en un futuro se puede
+% tener un formato común.
 \makeatletter         
+\ifthenelse{\equal{\@upm@school}{etsidi}}{%
+\renewcommand\maketitle{{
+    \sffamily
+    \thispagestyle{empty}
+
+    \vspace*{-6em}%
+    \noindent%
+    \includegraphics[height=6em]{upm-report/images/etsisi-logotipo-fondoblanco.png}
+    \hfill%
+    \includegraphics[height=6em]{upm-report/images/upm-logotipo.png}%
+
+    \vfill
+
+    \begin{center}
+        {\Large \MakeUppercase{\universityname}}\\*[0em]
+        {\large \MakeUppercase{\schoolname}}\\*[0.5em]
+    
+        \vfill
+    
+        {\large \MakeUppercase{\textbf{\reporttype}}}\\*[0em]
+        {\large \degreename}
+    
+        \vfill
+        \vfill
+        
+        \Large \textbf{\@title}
+    
+        \vfill
+        \vfill
+        
+        \large \textbf{Autoría}\\*[1em]
+        \@author
+
+        \vfill
+        
+        \large \textbf{Dirección}\\*[1em]
+        \@director
+    \end{center}
+
+    \vfill
+    \vfill
+    \vfill
+
+    \begin{flushright}
+        \normalsize Madrid, \@date
+    \end{flushright}
+
+    \vfill
+}}
+}{%
 \renewcommand\maketitle{{
     \sffamily
     \thispagestyle{empty}
@@ -508,6 +540,7 @@
     \normalfont
     \normalsize
 }}
+}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
