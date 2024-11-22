@@ -289,7 +289,7 @@
 % TODO Cambiar los tipos de letra según la guía de estilos de la escuela
 \setmainfont{TeX Gyre PagellaX}
 \setsansfont{Gillius ADF No2}
-\setmonofont{Inconsolatazi4}
+\setmonofont{Source Code Pro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fórmulas matemáticas
@@ -402,6 +402,14 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Enumeraciones, listas y descripciones
+%
+\usepackage{enumitem}
+\setlist[itemize]{align=parleft,left=0pt..1em}
+\setlist[enumerate]{align=parleft,left=0pt..1em}
+\setlist[description]{align=parleft,left=0pt..1em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Listados condicionales
 %
 \RequirePackage[
@@ -443,7 +451,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Referencias y bibliografía
 %
-\RequirePackage[backend=biber,style=apa]{biblatex}
+\RequirePackage[backend=biber,style=ieee]{biblatex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Portada
